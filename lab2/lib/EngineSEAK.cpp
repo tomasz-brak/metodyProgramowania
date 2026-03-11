@@ -5,6 +5,9 @@
 #include <stdexcept>
 #include <string>
 
+/**
+ * @brief Writes some useful information about the engine to stdout
+ */
 void EngineSEAK::writeConsole() {
   std::print("SEAK -- Model: {}, kp: {}, Tz: {}, T1: {}, T2: {}, T: {} -- "
              "Data: x{}; y{}; ...; x{}, y{}\n",
@@ -12,6 +15,11 @@ void EngineSEAK::writeConsole() {
              posY[DATA_SIZE - 1]);
 }
 
+/**
+ * @brief Load the engine data from a file
+ *
+ * @param data data stream to load from
+ */
 void EngineSEAK::load(std::istream &data) {
   std::string line1, line2;
   if (!(std::getline(data, line1) && std::getline(data, line2))) {
@@ -31,5 +39,11 @@ void EngineSEAK::load(std::istream &data) {
     std::print("Could not load data, malformed input: {}\n", e.what());
   }
 }
+
+/**
+ * @brief Return a type of the engine
+ *
+ * @return Engine type
+ */
 
 std::string EngineSEAK::getType() { return "SEAK"; };

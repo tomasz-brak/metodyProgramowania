@@ -2,6 +2,16 @@
 #include <cmath>
 #include <string>
 
+/**
+ * @brief Extracts a value from the front of a string up to a specified
+ * separator
+ *
+ * @param data String containting the data
+ * @param separator string containing all possible separators
+ * @param occurence how many should be extracted (which instance of a separator
+ * to search for) [default: 1]
+ * @return the value as string (without the separator)
+ */
 std::string Engine::nextValue(std::string &data, std::string separator,
                               int occurence) {
   size_t terminator = 0;
@@ -18,6 +28,12 @@ std::string Engine::nextValue(std::string &data, std::string separator,
   return value;
 }
 
+/**
+ * @brief Extract datapoints
+ *
+ * @param line1 Y positions (already without the first 6 parameters)
+ * @param line2 X positions (**with** the first 6)
+ */
 void Engine::loadDatapoints(std::string &line1, std::string &line2) {
   for (int i = 0; i < DATA_SIZE; i++) {
     posY[i] = std::stof(nextValue(line1, SEPARATOR));
@@ -46,6 +62,12 @@ void Engine::loadDatapoints(std::string &line1, std::string &line2) {
   }
 }
 
+/**
+ * @brief Calculate the *mse* for 2 engines
+ *
+ * @param other the other engine
+ * @return the mse value
+ */
 float Engine::mse(const Engine &other) const {
   float sum = 0;
   for (int i = 0; i < other.posX.size; ++i) {

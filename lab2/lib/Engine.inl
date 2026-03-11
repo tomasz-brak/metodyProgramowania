@@ -4,6 +4,16 @@
 #include <concepts>
 #include <limits>
 
+/**
+ * @brief Calculates the MSE for engines and and unknown one, writes data about
+ * the one with the lowest mse as well as some additional information about
+ * other matches.
+ *
+ * @tparam ArrayType Type of the engine
+ * @param output output stream to write to
+ * @param unknown the engine to check against
+ * @param engines array of the reference engine data
+ */
 template <typename ArrayType, int ArraySize>
   requires std::derived_from<ArrayType, Engine>
 void Engine::findMatch(std::ofstream &output, Engine &unknown,

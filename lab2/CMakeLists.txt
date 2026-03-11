@@ -10,7 +10,7 @@ target_include_directories(MyProgram PRIVATE ./lib)
 
 target_sources(MyProgram
   PRIVATE
-    main.cpp
+    Brak_Tomasz_Program_01.cpp
     lib/Engine.h
     lib/Engine.cpp
     lib/Engine.inl
