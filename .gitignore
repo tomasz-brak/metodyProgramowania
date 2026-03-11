@@ -1,0 +1,8 @@
+*/venv/*
+*/Debug/*
+*/compile_commands.json
+*/.cache/*
+*/out/*
+*/data/*
+*.zip
+
