@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include <cmath>
 #include <string>
+#include <format>
 
 /**
  * @brief Extracts a value from the front of a string up to a specified
@@ -12,17 +13,27 @@
  * to search for) [default: 1]
  * @return the value as string (without the separator)
  */
-std::string Engine::nextValue(std::string &data, std::string separator,
+std::string Engine::nextValue(std::string &data, std::string_view separator,
                               int occurence) {
-  size_t terminator = 0;
-  while (occurence > 0) {
-    terminator = data.find_first_of(separator, terminator + 1);
-    occurence--;
+  size_t terminator = std::string::npos;
+  size_t startSearch = 0;
+
+  for (int i = 0; i < occurence; ++i) {
+    terminator = data.find_first_of(separator, startSearch);
+
+    if (terminator == std::string::npos) {
+      // If we are looking for the next value but no separator exists,
+      // the value is the entire remaining string.
+      std::string value = data;
+      data = "";
+      return value;
+    }
+
+    if (i < occurence - 1) {
+      startSearch = terminator + 1;
+    }
   }
-  if (terminator == std::string::npos) {
-    data = "";
-    return data;
-  }
+
   std::string value = data.substr(0, terminator);
   data = data.substr(terminator + 1);
   return value;

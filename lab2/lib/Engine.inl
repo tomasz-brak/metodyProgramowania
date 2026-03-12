@@ -37,3 +37,4 @@ void Engine::findMatch(std::ofstream &output, Engine &unknown,
 
   output << minimalData << std::endl;
 }
+

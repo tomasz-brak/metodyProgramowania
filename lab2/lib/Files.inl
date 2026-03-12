@@ -22,6 +22,7 @@ StreamType promptOpenFile(std::string fileDesc,
   std::print("{}", fileDesc);
   std::getline(std::cin, filename);
   if (filename == "") {
+    std::print("Trying to open file {}...\n", skipPath);
     return readFile<StreamType>(skipPath);
   }
   if (!verifier(filename)) {
@@ -29,6 +30,7 @@ StreamType promptOpenFile(std::string fileDesc,
         "Couldn't open a file due to an error in the file name. Filename {}",
         filename));
   }
+  std::print("Trying to open file {}...\n", filename);
   return readFile<StreamType>(filename);
 };
 
@@ -41,7 +43,7 @@ StreamType promptOpenFile(std::string fileDesc,
  */
 template <typename StreamType> StreamType readFile(std::string fileName) {
   StreamType inFile(fileName);
-  if (inFile.is_open()) {
+  if (inFile.is_open() && inFile.good()) {
     return inFile;
   }
   throw std::runtime_error(std::format("Could not open file {}", fileName));

@@ -5,7 +5,7 @@
 #include <istream>
 #include <string>
 constexpr int DATA_SIZE = 100;
-constexpr std::string SEPARATOR = " \t\n\r\f\v";
+constexpr std::string_view SEPARATOR = " \t\n\r\f\v";
 
 class Engine {
 
@@ -22,8 +22,7 @@ public:
   virtual void load(std::istream &data) = 0;
   virtual std::string getType() = 0;
 
-  std::string nextValue(std::string &data, std::string separator,
-                        int occurence = 1);
+  std::string nextValue(std::string& data, std::string_view separator, int occurence = 1);
   float mse(const Engine &other) const;
 
   template <typename ArrayType, int ArraySize>
