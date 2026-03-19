@@ -5,7 +5,7 @@
 template <typename T, int s> class Array : public Container<T> {
 public:
   T data[s];
-  int size_ = 0;
+  int size_ = s;
 
   T &operator[](int i) override { return data[i]; }
   const T &operator[](int i) const override { return data[i]; }
@@ -14,12 +14,4 @@ public:
   T *end() override { return data + size_; }
 
   int size() const override { return size_; }
-
-  bool append(const T &value) override {
-    if (size_ >= s) {
-      return false;
-    }
-    data[size_++] = value;
-    return true;
-  }
 };
