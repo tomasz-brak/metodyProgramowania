@@ -1,8 +1,10 @@
 #pragma once
 
 #include "containers/container.h"
+#include <string_view>
 
-std::string_view next_token(std::string_view &line) {
+std::string_view next_token(const std::string_view &input) {
+  std::string_view line = input;
   const auto start = line.find_first_not_of(SEPARATORS);
   if (start == std::string_view::npos) {
     line = {};
@@ -25,7 +27,7 @@ std::string_view next_token(std::string_view &line) {
 
 template <typename T>
 void Container<T>::load(
-    std::string_view &line,
+    const std::string_view &line,
     std::function<T *(const std::string_view &)> converter) {
   while (!line.empty()) {
     std::string_view token = next_token(line);

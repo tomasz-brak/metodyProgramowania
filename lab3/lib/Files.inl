@@ -5,6 +5,7 @@
 #include <iostream>
 #include <print>
 #include <string>
+#include <string_view>
 /**
  * @brief Promts the user for a filename to open
  *
@@ -41,7 +42,8 @@ StreamType promptOpenFile(std::string fileDesc,
  * @param fileName name of the file to open
  * @return Opened file
  */
-template <typename StreamType> StreamType readFile(std::string fileName) {
+template <typename StreamType>
+StreamType readFile(const std::string_view &fileName) {
   StreamType inFile(fileName);
   if (inFile.is_open() && inFile.good()) {
     return inFile;

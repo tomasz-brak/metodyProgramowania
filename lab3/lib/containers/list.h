@@ -26,3 +26,5 @@ private:
   int size_ = 0;
   int capacity_ = 0;
 };
+
+#include "list.inl"

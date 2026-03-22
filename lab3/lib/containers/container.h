@@ -19,7 +19,7 @@ public:
 
   virtual bool append(const T &value) = 0;
 
-  void load(std::string_view &line,
+  void load(const std::string_view &line,
             std::function<T *(const std::string_view &)> converter);
 
 private:
