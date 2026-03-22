@@ -13,10 +13,23 @@ file(GLOB_RECURSE LIB_HEADERS CONFIGURE_DEPENDS
      "${CMAKE_CURRENT_SOURCE_DIR}/lib/*.inl"
 )
 
+file(GLOB_RECURSE SRC_HEADERS CONFIGURE_DEPENDS
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.inl"
+)
+
+file(GLOB_RECURSE SRC_SOURCES CONFIGURE_DEPENDS
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+)
+
+
 add_executable(MyProgram
   main.cpp
   ${LIB_SOURCES}
   ${LIB_HEADERS}
+  ${SRC_HEADERS}
+  ${SRC_SOURCES}
 )
 
 target_include_directories(MyProgram PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
