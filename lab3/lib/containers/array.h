@@ -13,5 +13,7 @@ public:
   T *begin() override { return data; }
   T *end() override { return data + size_; }
 
+  void load(std::string_view &line,
+            std::function<T *(const std::string_view &)> converter);
   int size() const override { return size_; }
 };
