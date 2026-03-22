@@ -1,5 +1,6 @@
 #pragma once
 #include "list.h"
+
 template <typename T> bool List<T>::append(const T &value) {
   ensure_capacity(size_ + 1);
   data_[size_++] = value;
