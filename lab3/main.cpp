@@ -15,7 +15,8 @@ std::function<long long(const std::unique_ptr<long long> &)> longToLong =
 
 int main(int argc, char *argv[]) {
   if (argc < 2 && isTxt(argv[1])) {
-    Logger::critical("Provide a valid input file in a .txt format");
+    Logger::critical(
+        "Provide a valid input file in a .txt format as an argument");
   }
   Logger::debug("Extracting input data from path: {}", argv[1]);
 
