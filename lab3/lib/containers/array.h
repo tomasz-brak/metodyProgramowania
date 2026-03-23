@@ -1,7 +1,7 @@
 #pragma once
 
 #include "container.h"
-#include <string_view>
+#include <string>
 
 template <typename T, int s> class Array : public Container<T> {
 public:
@@ -14,7 +14,7 @@ public:
   T *begin() override { return data; }
   T *end() override { return data + size_; }
 
-  void load(std::string_view &line,
-            std::function<T *(const std::string_view &)> converter);
+  void load(std::string &line,
+            std::function<T *(const std::string &)> converter);
   int size() const override { return size_; }
 };

@@ -95,7 +95,7 @@ $(function(){initNavTree('container_8h_source.html','',''); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;std::string&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">constexpr</span> <span class="keyword">auto</span> SEPARATORS = <span class="stringliteral">&quot; \t\f\v&quot;</span>;</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
@@ -123,14 +123,14 @@ $(function(){initNavTree('container_8h_source.html','',''); });
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">virtual</span> std::unique_ptr&lt;Container&lt;T&gt;&gt; copy() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <a class="code hl_function" href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">load</a>(<span class="keyword">const</span> std::string_view &amp;line,</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>       std::move_only_function&lt;T(<span class="keyword">const</span> std::string_view &amp;) <span class="keyword">const</span>&gt; converter);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <a class="code hl_function" href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">load</a>(<span class="keyword">const</span> std::string &amp;line,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>       std::move_only_function&lt;T(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>&gt; converter);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
 </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;container.inl&quot;</span></div>
 <div class="ttc" id="aclassContainer_html"><div class="ttname"><a href="classContainer.html">Container</a></div><div class="ttdef"><b>Definition</b> container.h:9</div></div>
-<div class="ttc" id="aclassContainer_html_a9e17683bf16ceaa02efb0ca4ecc2c2e2"><div class="ttname"><a href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">Container::load</a></div><div class="ttdeci">void load(const std::string_view &amp;line, std::move_only_function&lt; T(const std::string_view &amp;) const &gt; converter)</div><div class="ttdoc">Loads a SEPARATORS.</div><div class="ttdef"><b>Definition</b> container.inl:44</div></div>
+<div class="ttc" id="aclassContainer_html_a9e17683bf16ceaa02efb0ca4ecc2c2e2"><div class="ttname"><a href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">Container::load</a></div><div class="ttdeci">void load(const std::string &amp;line, std::move_only_function&lt; T(const std::string &amp;) const &gt; converter)</div><div class="ttdoc">Loads a SEPARATORS.</div><div class="ttdef"><b>Definition</b> container.inl:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

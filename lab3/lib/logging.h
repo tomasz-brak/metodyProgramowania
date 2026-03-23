@@ -2,6 +2,7 @@
 
 #include <array>
 #include <print>
+#include <string>
 #include <string_view>
 
 class Logger {
@@ -10,7 +11,7 @@ public:
 
   struct LevelMap {
     Level lvl;
-    std::string_view str;
+    std::string str;
   };
 
   static constexpr std::array<std::pair<Level, std::string_view>, 5>
@@ -31,31 +32,31 @@ public:
   inline static constexpr auto colorReset = "\033[0m";
 
   template <typename... Args>
-  static inline void log(Level level, std::string_view formatString,
+  static inline void log(Level level, std::string formatString,
                          Args &&...args);
 
   template <typename... Args>
-  static inline void debug(std::string_view fmt, Args &&...args) {
+  static inline void debug(std::string fmt, Args &&...args) {
     log(Level::Debug, fmt, std::forward<Args>(args)...);
   }
 
   template <typename... Args>
-  static inline void info(std::string_view fmt, Args &&...args) {
+  static inline void info(std::string fmt, Args &&...args) {
     log(Level::Info, fmt, std::forward<Args>(args)...);
   }
 
   template <typename... Args>
-  static inline void warn(std::string_view fmt, Args &&...args) {
+  static inline void warn(std::string fmt, Args &&...args) {
     log(Level::Warn, fmt, std::forward<Args>(args)...);
   }
 
   template <typename... Args>
-  static inline void error(std::string_view fmt, Args &&...args) {
+  static inline void error(std::string fmt, Args &&...args) {
     log(Level::Error, fmt, std::forward<Args>(args)...);
   }
 
   template <typename... Args>
-  static inline void critical(std::string_view fmt, Args &&...args) {
+  static inline void critical(std::string fmt, Args &&...args) {
     log(Level::Critical, fmt, std::forward<Args>(args)...);
   }
 };

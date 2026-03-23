@@ -7,7 +7,7 @@
 #include <optional>
 #include <sstream>
 #include <string>
-#include <string_view>
+#include <string>
 /**
  * @brief Extract one line from an input stream
  *
@@ -52,7 +52,7 @@ std::unique_ptr<Dataset> loadDataPoint(std::ifstream &file) {
     std::string sline = line.value().str();
     currentFrame->data->load(
         sline,
-        [](const std::string_view &s) mutable -> std::unique_ptr<long long> {
+        [](const std::string &s) mutable -> std::unique_ptr<long long> {
           return std::make_unique<long long>(std::stoll(std::string(s)));
         });
     Logger::debug("Sucessfuly loaded {} as the data", line.value().str());
@@ -73,7 +73,7 @@ std::unique_ptr<Dataset> loadDataPoint(std::ifstream &file) {
     std::string sline = line.value().str();
     currentFrame->query->load(
         sline,
-        [](const std::string_view &s) mutable -> std::unique_ptr<long long> {
+        [](const std::string &s) mutable -> std::unique_ptr<long long> {
           return std::make_unique<long long>(std::stoll(std::string(s)));
         });
     Logger::debug("Sucessfuly loaded {} as the queries", line.value().str());
@@ -89,7 +89,7 @@ std::unique_ptr<Dataset> loadDataPoint(std::ifstream &file) {
  * @param path Path to a file with data
  * @return #UniqueList with the data frames in it
  */
-UniqueList<Dataset> loadData(const std::string_view &path) {
+UniqueList<Dataset> loadData(const std::string &path) {
   Logger::debug("Loading data from path: {}", path);
   std::ifstream file = readFile<std::ifstream>(path);
   auto loadedData = std::make_unique<List<std::unique_ptr<Dataset>>>();

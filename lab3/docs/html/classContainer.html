@@ -126,7 +126,7 @@ virtual const T *&#160;</td><td class="memItemRight"><b>end</b> () const =0</td>
 virtual int&#160;</td><td class="memItemRight"><b>size</b> () const =0</td></tr>
 <tr class="memitem:a75a0381931d37a53b6d23922a742e6c8" id="r_a75a0381931d37a53b6d23922a742e6c8"><td class="memItemLeft">virtual bool&#160;</td><td class="memItemRight"><a class="el" href="#a75a0381931d37a53b6d23922a742e6c8">append</a> (T value)=0</td></tr>
 <tr class="memitem:a0de74f462ea09bc04d2077f22899dd38" id="r_a0de74f462ea09bc04d2077f22899dd38"><td class="memItemLeft">virtual std::unique_ptr&lt; <a class="el" href="classContainer.html">Container</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0de74f462ea09bc04d2077f22899dd38">copy</a> () const =0</td></tr>
-<tr class="memitem:a9e17683bf16ceaa02efb0ca4ecc2c2e2" id="r_a9e17683bf16ceaa02efb0ca4ecc2c2e2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9e17683bf16ceaa02efb0ca4ecc2c2e2">load</a> (const std::string_view &amp;line, std::move_only_function&lt; T(const std::string_view &amp;) const &gt; converter)</td></tr>
+<tr class="memitem:a9e17683bf16ceaa02efb0ca4ecc2c2e2" id="r_a9e17683bf16ceaa02efb0ca4ecc2c2e2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9e17683bf16ceaa02efb0ca4ecc2c2e2">load</a> (const std::string &amp;line, std::move_only_function&lt; T(const std::string &amp;) const &gt; converter)</td></tr>
 <tr class="memdesc:a9e17683bf16ceaa02efb0ca4ecc2c2e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a #SEPARATORS.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -199,12 +199,12 @@ template&lt;typename T&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classContainer.html">Container</a>&lt; T &gt;::load </td>
           <td>(</td>
-          <td class="paramtype">const std::string_view &amp;</td>          <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>input</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::move_only_function&lt; T(const std::string_view &amp;) const &gt;</td>          <td class="paramname"><span class="paramname"><em>converter</em></span>&#160;)</td>
+          <td class="paramtype">std::move_only_function&lt; T(const std::string &amp;) const &gt;</td>          <td class="paramname"><span class="paramname"><em>converter</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -219,7 +219,7 @@ template&lt;typename T&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">input</td><td>String to load from </td></tr>
-    <tr><td class="paramname">converter</td><td>Converter function to convert from string_view to #T </td></tr>
+    <tr><td class="paramname">converter</td><td>Converter function to convert from std::string to #T </td></tr>
   </table>
   </dd>
 </dl>

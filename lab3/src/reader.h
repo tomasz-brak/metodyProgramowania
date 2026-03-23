@@ -1,6 +1,6 @@
 #pragma once
 #include "containers/list.h"
-#include <string_view>
+#include <string>
 
 struct Dataset {
   UniqueList<long long> data =
@@ -10,4 +10,4 @@ struct Dataset {
   std::unique_ptr<Dataset> copy() const;
 };
 
-UniqueList<Dataset> loadData(const std::string_view &path);
+UniqueList<Dataset> loadData(const std::string &path);

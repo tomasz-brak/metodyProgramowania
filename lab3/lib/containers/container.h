@@ -2,7 +2,7 @@
 
 #include <functional>
 #include <memory>
-#include <string_view>
+#include <string>
 
 constexpr auto SEPARATORS = " \t\f\v";
 
@@ -29,8 +29,8 @@ public:
   virtual std::unique_ptr<Container<T>> copy() const = 0;
 
   void
-  load(const std::string_view &line,
-       std::move_only_function<T(const std::string_view &) const> converter);
+  load(const std::string &line,
+       std::move_only_function<T(const std::string &) const> converter);
 };
 
 #include "container.inl"

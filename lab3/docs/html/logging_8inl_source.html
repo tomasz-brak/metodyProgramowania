@@ -96,7 +96,7 @@ $(function(){initNavTree('logging_8inl_source.html','',''); });
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
 <div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classLogger.html#acc0dc3535e3a3682cfbd84416c288fc4">   13</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classLogger.html#acc0dc3535e3a3682cfbd84416c288fc4">Logger::log</a>(Level level, std::string_view formatString, Args &amp;&amp;...args) {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classLogger.html#acc0dc3535e3a3682cfbd84416c288fc4">   13</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classLogger.html#acc0dc3535e3a3682cfbd84416c288fc4">Logger::log</a>(Level level, std::string formatString, Args &amp;&amp;...args) {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">const</span> <span class="keyword">auto</span> idx = <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(level);</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  std::print(<span class="stringliteral">&quot;{}[{}]{} &quot;</span>, logColors[idx], logLevelStrings[idx].second,</div>
@@ -105,7 +105,7 @@ $(function(){initNavTree('logging_8inl_source.html','',''); });
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  std::print(<span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}</div>
 </div>
-<div class="ttc" id="aclassLogger_html_acc0dc3535e3a3682cfbd84416c288fc4"><div class="ttname"><a href="classLogger.html#acc0dc3535e3a3682cfbd84416c288fc4">Logger::log</a></div><div class="ttdeci">static void log(Level level, std::string_view formatString, Args &amp;&amp;...args)</div><div class="ttdoc">Shows a formatted message to the stdout.</div><div class="ttdef"><b>Definition</b> logging.inl:13</div></div>
+<div class="ttc" id="aclassLogger_html_acc0dc3535e3a3682cfbd84416c288fc4"><div class="ttname"><a href="classLogger.html#acc0dc3535e3a3682cfbd84416c288fc4">Logger::log</a></div><div class="ttdeci">static void log(Level level, std::string formatString, Args &amp;&amp;...args)</div><div class="ttdoc">Shows a formatted message to the stdout.</div><div class="ttdef"><b>Definition</b> logging.inl:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

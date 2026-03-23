@@ -98,7 +98,7 @@ $(function(){initNavTree('Files_8inl_source.html','',''); });
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;print&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;std::string&gt;</span></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> StreamType&gt;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>StreamType promptOpenFile(std::string fileDesc,</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                          std::function&lt;<span class="keywordtype">bool</span>(std::string)&gt; verifier,</div>
@@ -120,7 +120,7 @@ $(function(){initNavTree('Files_8inl_source.html','',''); });
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>};</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> StreamType&gt;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>StreamType readFile(<span class="keyword">const</span> std::string_view &amp;fileName) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>StreamType readFile(<span class="keyword">const</span> std::string &amp;fileName) {</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  StreamType inFile((std::string(fileName)));</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keywordflow">if</span> (inFile.is_open() &amp;&amp; inFile.good()) {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> inFile;</div>

@@ -96,11 +96,11 @@ $(function(){initNavTree('container_8inl_source.html','',''); });
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;containers/container.h&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;logging.h&quot;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;std::string&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">inline</span> std::string_view next_token(std::string_view &amp;line) {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">inline</span> std::string next_token(std::string &amp;line) {</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="keyword">const</span> <span class="keyword">auto</span> start = line.find_first_not_of(SEPARATORS);</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keywordflow">if</span> (start == std::string_view::npos) {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keywordflow">if</span> (start == std::string::npos) {</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    line = {};</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">return</span> {};</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  }</div>
@@ -110,7 +110,7 @@ $(function(){initNavTree('container_8inl_source.html','',''); });
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keyword">const</span> <span class="keyword">auto</span> end = line.find_first_of(SEPARATORS);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">const</span> <span class="keyword">auto</span> token = line.substr(0, end);</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keywordflow">if</span> (end == std::string_view::npos) {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keywordflow">if</span> (end == std::string::npos) {</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    line = {};</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    line.remove_prefix(end);</div>
@@ -122,11 +122,11 @@ $(function(){initNavTree('container_8inl_source.html','',''); });
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">   44</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">Container&lt;T&gt;::load</a>(</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">const</span> std::string_view &amp;input,</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    std::move_only_function&lt;T(<span class="keyword">const</span> std::string_view &amp;) <span class="keyword">const</span>&gt; converter) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  std::string_view line = input;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">const</span> std::string &amp;input,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    std::move_only_function&lt;T(<span class="keyword">const</span> std::string &amp;) <span class="keyword">const</span>&gt; converter) {</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  std::string line = input;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keywordflow">while</span> (!line.empty()) {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::string_view token = next_token(line);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    std::string token = next_token(line);</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">if</span> (token.empty()) {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
@@ -173,7 +173,7 @@ $(function(){initNavTree('container_8inl_source.html','',''); });
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>};</div>
 </div>
 <div class="ttc" id="aclassContainer_html"><div class="ttname"><a href="classContainer.html">Container</a></div><div class="ttdef"><b>Definition</b> container.h:9</div></div>
-<div class="ttc" id="aclassContainer_html_a9e17683bf16ceaa02efb0ca4ecc2c2e2"><div class="ttname"><a href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">Container::load</a></div><div class="ttdeci">void load(const std::string_view &amp;line, std::move_only_function&lt; T(const std::string_view &amp;) const &gt; converter)</div><div class="ttdoc">Loads a SEPARATORS.</div><div class="ttdef"><b>Definition</b> container.inl:44</div></div>
+<div class="ttc" id="aclassContainer_html_a9e17683bf16ceaa02efb0ca4ecc2c2e2"><div class="ttname"><a href="classContainer.html#a9e17683bf16ceaa02efb0ca4ecc2c2e2">Container::load</a></div><div class="ttdeci">void load(const std::string &amp;line, std::move_only_function&lt; T(const std::string &amp;) const &gt; converter)</div><div class="ttdoc">Loads a SEPARATORS.</div><div class="ttdef"><b>Definition</b> container.inl:44</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

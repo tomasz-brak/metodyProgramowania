@@ -3,6 +3,7 @@
 #include "containers/container.h"
 #include "logging.h"
 #include <memory>
+#include <string>
 #include <string_view>
 
 /**
@@ -12,22 +13,23 @@
  * @param line Line to extract the chars from. Gets modified
  * @return Extracted token, without the separator.
  */
-inline std::string_view next_token(std::string_view &line) {
+
+inline std::string next_token(std::string &line) {
   const auto start = line.find_first_not_of(SEPARATORS);
-  if (start == std::string_view::npos) {
-    line = {};
+  if (start == std::string::npos) {
+    line.clear();
     return {};
   }
 
-  line.remove_prefix(start);
+  line.erase(0, start);
 
   const auto end = line.find_first_of(SEPARATORS);
-  const auto token = line.substr(0, end);
+  const std::string token = line.substr(0, end);
 
-  if (end == std::string_view::npos) {
-    line = {};
+  if (end == std::string::npos) {
+    line.clear();
   } else {
-    line.remove_prefix(end);
+    line.erase(0, end);
   }
 
   return token;
@@ -38,15 +40,15 @@ inline std::string_view next_token(std::string_view &line) {
  *
  * @tparam T Type of the held item
  * @param input String to load from
- * @param converter Converter function to convert from string_view to #T
+ * @param converter Converter function to convert from std::string to #T
  */
 template <typename T>
 void Container<T>::load(
-    const std::string_view &input,
-    std::move_only_function<T(const std::string_view &) const> converter) {
-  std::string_view line = input;
+    const std::string &input,
+    std::move_only_function<T(const std::string &) const> converter) {
+  std::string line = input;
   while (!line.empty()) {
-    std::string_view token = next_token(line);
+    std::string token = next_token(line);
     if (token.empty()) {
       break;
     }
