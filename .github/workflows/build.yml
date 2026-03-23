@@ -86,7 +86,7 @@ jobs:
           $hash = -join ($sha.Hash | ForEach-Object { $_.ToString("x2") })
 
           "hash=$hash" >> $env:GITHUB_OUTPUT
-          Write-Host "Hash for $lab: $hash"
+          Write-Host ("Hash for {0}: {1}" -f $lab, $hash)
 
       - name: Restore CMake build cache
         id: cache
