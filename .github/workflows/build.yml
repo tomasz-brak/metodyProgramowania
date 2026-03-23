@@ -20,11 +20,16 @@ jobs:
         id: set
         shell: bash
         run: |
-          labs_json="$(find . -maxdepth 1 -mindepth 1 -type d -name 'lab*' -printf '%f\n' | sort | jq -R -s -c 'split("\n") | map(select(length>0)')"
+          set -euo pipefail
+          labs_json="$(find . -maxdepth 1 -mindepth 1 -type d -name 'lab*' -printf '%f\n' \
+            | sort \
+            | jq -R -s -c 'split("\n") | map(select(length>0))')"
+
           if [ -z "$labs_json" ] || [ "$labs_json" = "[]" ]; then
             echo "No lab* directories found in repo root."
             labs_json="[]"
           fi
+
           echo "labs=$labs_json" >> "$GITHUB_OUTPUT"
           echo "Discovered: $labs_json"
 
