@@ -1,0 +1,33 @@
+\doxysection{alghoritms.\+h}
+\hypertarget{alghoritms_8h_source}{}\label{alghoritms_8h_source}\index{lib/alghoritms.h@{lib/alghoritms.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}containers/container.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00006\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00007\ std::pair<int,\ int>}
+\DoxyCodeLine{00008\ findRangeBoundaries(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ \textcolor{keywordtype}{int}\ pos,}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}(\textcolor{keyword}{const}\ T\ \&)>\ match);}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{int}\ interpolationSearch(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ \textcolor{keyword}{const}\ T\ \&target,}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}(\textcolor{keyword}{const}\ T\ \&)>\ match);}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{int}\ binarySearch(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ \textcolor{keyword}{const}\ T\ \&target,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}(\textcolor{keyword}{const}\ T\ \&)>\ match);}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00020\ \textcolor{keyword}{concept\ }\doxymbox{\hyperlink{conceptHashable}{Hashable}}\ =\ \textcolor{keyword}{requires}(T\ a)\ \{}
+\DoxyCodeLine{00021\ \ \ \{\ std::hash<T>\{\}(a)\ \}\ -\/>\ std::convertible\_to<std::size\_t>;}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{template}\ <Hashable\ T>}
+\DoxyCodeLine{00025\ std::unique\_ptr<Container<T>>\ uniqueElements(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&values);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ "{}alghoritms.inl"{}}}
+
+\end{DoxyCode}

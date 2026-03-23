@@ -1,0 +1,81 @@
+\doxysection{container.\+inl}
+\hypertarget{container_8inl_source}{}\label{container_8inl_source}\index{lib/containers/container.inl@{lib/containers/container.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}containers/container.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{inline}\ std::string\_view\ next\_token(std::string\_view\ \&line)\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ start\ =\ line.find\_first\_not\_of(SEPARATORS);}
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordflow}{if}\ (start\ ==\ std::string\_view::npos)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ line\ =\ \{\};}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00020\ \ \ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ line.remove\_prefix(start);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ end\ =\ line.find\_first\_of(SEPARATORS);}
+\DoxyCodeLine{00025\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ token\ =\ line.substr(0,\ end);}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordflow}{if}\ (end\ ==\ std::string\_view::npos)\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ line\ =\ \{\};}
+\DoxyCodeLine{00029\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ line.remove\_prefix(end);}
+\DoxyCodeLine{00031\ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordflow}{return}\ token;}
+\DoxyCodeLine{00034\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00044\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classContainer_a9e17683bf16ceaa02efb0ca4ecc2c2e2}{Container<T>::load}}(}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{const}\ std::string\_view\ \&input,}
+\DoxyCodeLine{00046\ \ \ \ \ std::move\_only\_function<T(\textcolor{keyword}{const}\ std::string\_view\ \&)\ \textcolor{keyword}{const}>\ converter)\ \{}
+\DoxyCodeLine{00047\ \ \ std::string\_view\ line\ =\ input;}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{while}\ (!line.empty())\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ std::string\_view\ token\ =\ next\_token(line);}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (token.empty())\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ Logger::debug(\textcolor{stringliteral}{"{}Loading\ token:\ \{\}"{}},\ token);}
+\DoxyCodeLine{00054\ \ \ \ \ T\ value\ =\ converter(token);}
+\DoxyCodeLine{00055\ \ \ \ \ append(std::move(value));}
+\DoxyCodeLine{00056\ \ \ \}}
+\DoxyCodeLine{00057\ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00068\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ CharT>}
+\DoxyCodeLine{00069\ \textcolor{keyword}{struct\ }std::formatter<std::unique\_ptr<T>,\ CharT>\ :\ std::formatter<T,\ CharT>\ \{}
+\DoxyCodeLine{00070\ \ \ \textcolor{comment}{//\ Inheriting\ from\ std::formatter<T,\ CharT>\ provides\ parse,}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ FormatContext>}
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{auto}\ format(\textcolor{keyword}{const}\ std::unique\_ptr<T>\ \&ptr,\ FormatContext\ \&ctx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (ptr)\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::formatter<T,\ CharT>::format(*ptr,\ ctx);}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordflow}{return}\ std::format\_to(ctx.out(),\ \textcolor{stringliteral}{"{}null"{}});}
+\DoxyCodeLine{00078\ \ \ \}}
+\DoxyCodeLine{00079\ \};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00089\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ CharT>}
+\DoxyCodeLine{00090\ \textcolor{keyword}{struct\ }std::formatter<\doxymbox{\hyperlink{classContainer}{Container}}<T>,\ CharT>\ \{}
+\DoxyCodeLine{00091\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ parse(std::format\_parse\_context\ \&ctx)\ \{\ \textcolor{keywordflow}{return}\ ctx.begin();\ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ FormatContext>}
+\DoxyCodeLine{00094\ \ \ \textcolor{keyword}{auto}\ format(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ FormatContext\ \&ctx)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keyword}{auto}\ out\ =\ ctx.out();}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{bool}\ first\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&elem\ :\ container)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!first)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ out\ =\ std::format\_to(out,\ \textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ out\ =\ std::format\_to(out,\ \textcolor{stringliteral}{"{}\{\}"{}},\ elem);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00105\ \ \ \}}
+\DoxyCodeLine{00106\ \};}
+
+\end{DoxyCode}

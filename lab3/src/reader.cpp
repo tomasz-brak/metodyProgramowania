@@ -8,6 +8,12 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+/**
+ * @brief Extract one line from an input stream
+ *
+ * @param dataStream input stream
+ * @return optional stream if sucessfuly extracted
+ */
 std::optional<std::istringstream> oneLine(std::ifstream &dataStream) {
   std::string line;
   std::getline(dataStream, line);
@@ -19,6 +25,12 @@ std::optional<std::istringstream> oneLine(std::ifstream &dataStream) {
   return iss;
 }
 
+/**
+ * @brief Loads a data point from an input stream
+ *
+ * @param file input stream
+ * @return Dataset with all values of a single data frame
+ */
 std::unique_ptr<Dataset> loadDataPoint(std::ifstream &file) {
 
   int dataSize = 1;
@@ -70,6 +82,13 @@ std::unique_ptr<Dataset> loadDataPoint(std::ifstream &file) {
   return currentFrame;
 }
 
+/**
+ * @brief Performs the data loading action
+ * Loads data according to the format specified in the task
+ * Multiple dataframes might be present.
+ * @param path Path to a file with data
+ * @return #UniqueList with the data frames in it
+ */
 UniqueList<Dataset> loadData(const std::string_view &path) {
   Logger::debug("Loading data from path: {}", path);
   std::ifstream file = readFile<std::ifstream>(path);
@@ -92,6 +111,11 @@ UniqueList<Dataset> loadData(const std::string_view &path) {
   return loadedData;
 }
 
+/**
+ * @brief Copy for the Dataset structure
+ * Performs a copy on the Dataset
+ * @return Copy of a #Dataset
+ */
 std::unique_ptr<Dataset> Dataset::copy() const {
   auto new_ds = std::make_unique<Dataset>();
 

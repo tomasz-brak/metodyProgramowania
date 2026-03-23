@@ -1,0 +1,69 @@
+\doxysection{logging.\+h}
+\hypertarget{logging_8h_source}{}\label{logging_8h_source}\index{lib/logging.h@{lib/logging.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <print>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classLogger}{Logger}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{enum}\ Level\ \{\ Debug,\ Info,\ Warn,\ Error,\ Critical\ \};}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structLogger_1_1LevelMap}{LevelMap}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ Level\ lvl;}
+\DoxyCodeLine{00013\ \ \ \ \ std::string\_view\ str;}
+\DoxyCodeLine{00014\ \ \ \};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array<std::pair<Level,\ std::string\_view>,\ 5>}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ logLevelStrings\{\{\{Debug,\ \textcolor{stringliteral}{"{}Debug"{}}\},}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Info,\ \textcolor{stringliteral}{"{}Info"{}}\},}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Warn,\ \textcolor{stringliteral}{"{}Warn"{}}\},}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Error,\ \textcolor{stringliteral}{"{}Error"{}}\},}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Critical,\ \textcolor{stringliteral}{"{}Critical"{}}\}\}\};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ std::array\ logColors\ =\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[36m"{}},\ \textcolor{comment}{//\ Cyan}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[32m"{}},\ \textcolor{comment}{//\ Green}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[33m"{}},\ \textcolor{comment}{//\ Yellow}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[31m"{}},\ \textcolor{comment}{//\ Red}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[35m"{}}\ \ \textcolor{comment}{//\ Magenta}}
+\DoxyCodeLine{00029\ \ \ \};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ colorReset\ =\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}}(Level\ level,\ std::string\_view\ formatString,}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Args\ \&\&...args);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ debug(std::string\_view\ fmt,\ Args\ \&\&...args)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}}(Level::Debug,\ fmt,\ std::forward<Args>(args)...);}
+\DoxyCodeLine{00040\ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ info(std::string\_view\ fmt,\ Args\ \&\&...args)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}}(Level::Info,\ fmt,\ std::forward<Args>(args)...);}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ warn(std::string\_view\ fmt,\ Args\ \&\&...args)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}}(Level::Warn,\ fmt,\ std::forward<Args>(args)...);}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ error(std::string\_view\ fmt,\ Args\ \&\&...args)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}}(Level::Error,\ fmt,\ std::forward<Args>(args)...);}
+\DoxyCodeLine{00055\ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00058\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ critical(std::string\_view\ fmt,\ Args\ \&\&...args)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}}(Level::Critical,\ fmt,\ std::forward<Args>(args)...);}
+\DoxyCodeLine{00060\ \ \ \}}
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#include\ "{}logging.inl"{}}}
+
+\end{DoxyCode}

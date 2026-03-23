@@ -1,0 +1,54 @@
+\doxysection{std::\+formatter\texorpdfstring{$<$}{<} std::\+unique\+\_\+ptr\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}, CharT \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structstd_1_1formatter_3_01std_1_1unique__ptr_3_01T_01_4_00_01CharT_01_4}{}\label{structstd_1_1formatter_3_01std_1_1unique__ptr_3_01T_01_4_00_01CharT_01_4}\index{std::formatter$<$ std::unique\_ptr$<$ T $>$, CharT $>$@{std::formatter$<$ std::unique\_ptr$<$ T $>$, CharT $>$}}
+
+
+Formatter specialization for std::\+unique\+\_\+ptr.  
+
+
+
+
+Inheritance diagram for std::\+formatter\texorpdfstring{$<$}{<} std::\+unique\+\_\+ptr\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}, CharT \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{structstd_1_1formatter_3_01std_1_1unique__ptr_3_01T_01_4_00_01CharT_01_4__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for std::\+formatter\texorpdfstring{$<$}{<} std::\+unique\+\_\+ptr\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}, CharT \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=213pt]{structstd_1_1formatter_3_01std_1_1unique__ptr_3_01T_01_4_00_01CharT_01_4__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structstd_1_1formatter_3_01std_1_1unique__ptr_3_01T_01_4_00_01CharT_01_4_a2010a10c9b9d3325aa8c27eafb9ac31b}\label{structstd_1_1formatter_3_01std_1_1unique__ptr_3_01T_01_4_00_01CharT_01_4_a2010a10c9b9d3325aa8c27eafb9ac31b} 
+{\footnotesize template$<$typename Format\+Context$>$ }\\auto {\bfseries format} (const std::\+unique\+\_\+ptr$<$ T $>$ \&ptr, Format\+Context \&ctx) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename T, typename CharT$>$\newline
+struct std::\+formatter$<$ std::\+unique\+\_\+ptr$<$ T $>$, Char\+T $>$}
+Formatter specialization for std::\+unique\+\_\+ptr. 
+
+If the pointer is valid, it delegates formatting to the formatter for type \+\#T. If the pointer is null, it outputs the string "{}null"{}.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type of the object managed by the unique\+\_\+ptr. \\
+\hline
+{\em CharT} & Character type \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this struct was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+lib/\+containers/\+container.\+inl\end{DoxyCompactItemize}

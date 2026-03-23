@@ -5,6 +5,13 @@
 #include <algorithm>
 #include <set>
 
+/**
+ * @brief Appends a value to the storage
+ * capacity is managed automaticaly. Value gets moved
+ * @tparam T
+ * @param value
+ * @return
+ */
 template <typename T> bool List<T>::append(T value) {
   ensure_capacity(size_ + 1);
   data_[size_] = std::move(value);
@@ -12,6 +19,12 @@ template <typename T> bool List<T>::append(T value) {
   return true;
 }
 
+/**
+ * @brief Extends the capacity of the List storage
+ * Extends the capacity of the underlaying storage pointer, doubling every time.
+ * @tparam T
+ * @param desired
+ */
 template <typename T> void List<T>::ensure_capacity(int desired) {
   if (this == nullptr) {
     Logger::critical("Attempted to extend a null list!");
@@ -38,6 +51,12 @@ template <typename T> void List<T>::ensure_capacity(int desired) {
   capacity_ = new_capacity;
 }
 
+/**
+ * @brief initializer list constructor
+ * Creates a list object form an initializer list of elements
+ * @tparam T Container type
+ * @param init initializer list
+ */
 template <typename T> List<T>::List(std::initializer_list<T> init) {
   ensure_capacity(init.size());
   for (const auto &val : init) {
@@ -45,12 +64,25 @@ template <typename T> List<T>::List(std::initializer_list<T> init) {
   }
 }
 
+/**
+ * @brief Creates a list from a set
+ *
+ * @tparam T Container type
+ * @param s Set to be created from (copy values)
+ */
 template <typename T> List<T>::List(const std::set<T> &s) {
   ensure_capacity(s.size());
   for (const auto &val : s) {
     append(val);
   }
 }
+
+/**
+ * @brief Creates a List from a Set of unique_ptr
+ *
+ * @tparam Compare Any comparator is ok
+ * @param s The set with unique_ptr objects
+ */
 
 template <typename T>
 template <typename Compare>
@@ -61,6 +93,14 @@ List<T>::List(std::set<T, Compare> &&s) {
   }
 }
 
+/**
+ * @brief Copies the List
+ *  - For lists consisting of non-pointer types it perfroms a normal copy
+ *  - Pointers can provide a #copy function
+ *  - If not copy constructor is used
+ * @tparam T Container type
+ * @return unique_ptr with the copy of the container
+ */
 template <typename T> std::unique_ptr<Container<T>> List<T>::copy() const {
   auto newList = std::make_unique<List<T>>();
   newList->ensure_capacity(this->size_);
@@ -95,6 +135,13 @@ template <typename T> std::unique_ptr<Container<T>> List<T>::copy() const {
   return newList;
 }
 
+/**
+ * @brief Slices the list in place
+ *
+ * @tparam T Container type
+ * @param min low bound of the slice (index)
+ * @param max high bound of the slice (index)
+ */
 template <typename T> void List<T>::slice(int min, int max) {
   // Bounds checking and validation
   if (min < 0)

@@ -1,0 +1,2 @@
+\_form#0=221x24:$pos = low + \left[ \frac{(target -
+arr[low]) \times (high - low)}{arr[high] - arr[low]} \right]$

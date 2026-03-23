@@ -5,6 +5,17 @@
 #include <functional>
 #include <memory>
 #include <set>
+/**
+ * @brief Given a **sorted** container and a posion finds all elements with the
+ * same value
+ *
+ * @tparam T Container type
+ * @param container Elements to search in
+ * @param pos Posion of the first element that matches the search pattern
+ * @param match Function to map the #T type to a numeric value
+ * @return a pair of **indecies** with the first being the first occurrence and
+ * the second the last.
+ */
 template <typename T>
 std::pair<int, int>
 findRangeBoundaries(const Container<T> &container, int pos,
@@ -31,6 +42,19 @@ findRangeBoundaries(const Container<T> &container, int pos,
   return {first, last};
 }
 
+/**
+ * @brief Interpolation search in a **sorted** container
+ *
+ * Pozycja jest dobierana zgodnie z wzorem \f$pos = low + \left[ \frac{(target -
+ * arr[low]) \times (high - low)}{arr[high] - arr[low]} \right]\f$
+ *
+ * @tparam T Container type
+ * @param container Container of **sorted** elements
+ * @param target the element we search for.
+ * @param match Function to map the #T type to a numeric value used to determent
+ * a match.
+ * @return index of the found value
+ */
 template <typename T>
 int interpolationSearch(const Container<T> &container, const T &target,
                         std::function<long long(const T &)> match) {
@@ -67,6 +91,15 @@ int interpolationSearch(const Container<T> &container, const T &target,
   return -1;
 }
 
+/**
+ * @brief Performs a binary search of a sorted container
+ *
+ * @tparam T Container type
+ * @param container container with **sorted** componets
+ * @param target the value we search for
+ * @param match Function to map the #T type to a numeric value
+ * @return index of the first found value
+ */
 template <typename T>
 int binarySearch(const Container<T> &container, const T &target,
                  std::function<long long(const T &)> match) {
@@ -90,6 +123,12 @@ int binarySearch(const Container<T> &container, const T &target,
   return -1;
 }
 
+/**
+ * @brief Retuns a copy of a list with every element occuring only once
+ *
+ * @param values This gets modified! container of non-unique elements
+ * @return Unique elements of the container #values
+ */
 template <Hashable T>
 std::unique_ptr<Container<T>> uniqueElements(Container<T> &values) {
   auto comp = [](const T &a, const T &b) { return *a < *b; };

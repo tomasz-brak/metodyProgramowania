@@ -1,0 +1,11 @@
+\doxysection{Hashable Concept Reference}
+\hypertarget{conceptHashable}{}\label{conceptHashable}\index{Hashable@{Hashable}}
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\doxymbox{\hyperlink{conceptHashable}{Hashable}}\ =\ \textcolor{keyword}{requires}(T\ a)\ \{}
+\DoxyCodeLine{\ \ \{\ std::hash<T>\{\}(a)\ \}\ -\/>\ std::convertible\_to<std::size\_t>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

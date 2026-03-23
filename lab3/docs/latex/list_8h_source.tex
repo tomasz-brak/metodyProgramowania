@@ -1,0 +1,55 @@
+\doxysection{list.\+h}
+\hypertarget{list_8h_source}{}\label{list_8h_source}\index{lib/containers/list.h@{lib/containers/list.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}container.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structis__unique__ptr}{is\_unique\_ptr}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ D>}
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structis__unique__ptr}{is\_unique\_ptr}}<std::unique\_ptr<T,\ D>>\ :\ std::true\_type\ \{\};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{class\ }List\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classContainer}{Container}}<T>\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ List()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00015\ \ \ List(std::initializer\_list<T>\ init);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Compare>\ List(std::set<T,\ Compare>\ \&\&s);}
+\DoxyCodeLine{00018\ \ \ List(\textcolor{keyword}{const}\ std::set<T>\ \&s);}
+\DoxyCodeLine{00019\ \ \ \string~List()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ T\ \&operator[](\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_[i];\ \}}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{const}\ T\ \&operator[](\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_[i];\ \}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ T\ \&at(\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_[i];\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{const}\ T\ \&at(\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_[i];\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ T\ *begin()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_.get();\ \}}
+\DoxyCodeLine{00029\ \ \ T\ *end()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_.get()\ +\ size\_;\ \}}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{const}\ T\ *begin()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_.get();\ \}}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{const}\ T\ *end()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ data\_.get()\ +\ size\_;\ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \textcolor{keywordtype}{int}\ size()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ size\_;\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{ensure\_capacity}}(\textcolor{keywordtype}{int}\ desired);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classList_aa7be1bd4e8cafd153026f588c806502e}{slice}}(\textcolor{keywordtype}{int}\ min,\ \textcolor{keywordtype}{int}\ max);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{append}}(T\ value)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00040\ \ \ std::unique\_ptr<Container<T>>\ \doxymbox{\hyperlink{classList_a054613f874b94aab67ad9d0f879fe93a}{copy}}()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00043\ \ \ std::unique\_ptr<T[]>\ data\_;}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordtype}{int}\ size\_\ =\ 0;}
+\DoxyCodeLine{00045\ \ \ \textcolor{keywordtype}{int}\ capacity\_\ =\ 0;}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00048\ \textcolor{keyword}{using\ }UniqueList\ =\ std::unique\_ptr<List<std::unique\_ptr<T>>>;}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}list.inl"{}}}
+
+\end{DoxyCode}

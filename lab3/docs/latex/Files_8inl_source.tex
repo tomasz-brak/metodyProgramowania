@@ -1,0 +1,42 @@
+\doxysection{Files.\+inl}
+\hypertarget{Files_8inl_source}{}\label{Files_8inl_source}\index{lib/Files.inl@{lib/Files.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Files.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <print>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ StreamType>}
+\DoxyCodeLine{00019\ StreamType\ promptOpenFile(std::string\ fileDesc,}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{bool}(std::string)>\ verifier,}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ skipPath)\ \{}
+\DoxyCodeLine{00022\ \ \ std::string\ filename;}
+\DoxyCodeLine{00023\ \ \ std::print(\textcolor{stringliteral}{"{}\{\}"{}},\ fileDesc);}
+\DoxyCodeLine{00024\ \ \ std::getline(std::cin,\ filename);}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordflow}{if}\ (filename\ ==\ \textcolor{stringliteral}{"{}"{}})\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ std::print(\textcolor{stringliteral}{"{}Trying\ to\ open\ file\ \{\}...\(\backslash\)n"{}},\ skipPath);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ readFile<StreamType>(skipPath);}
+\DoxyCodeLine{00028\ \ \ \}}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{if}\ (!verifier(filename))\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(std::format(}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Couldn't\ open\ a\ file\ due\ to\ an\ error\ in\ the\ file\ name.\ Filename\ \{\}"{}},}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ filename));}
+\DoxyCodeLine{00033\ \ \ \}}
+\DoxyCodeLine{00034\ \ \ std::print(\textcolor{stringliteral}{"{}Trying\ to\ open\ file\ \{\}...\(\backslash\)n"{}},\ filename);}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordflow}{return}\ readFile<StreamType>(filename);}
+\DoxyCodeLine{00036\ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ StreamType>}
+\DoxyCodeLine{00046\ StreamType\ readFile(\textcolor{keyword}{const}\ std::string\_view\ \&fileName)\ \{}
+\DoxyCodeLine{00047\ \ \ StreamType\ inFile((std::string(fileName)));}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{if}\ (inFile.is\_open()\ \&\&\ inFile.good())\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ inFile;}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(std::format(\textcolor{stringliteral}{"{}Could\ not\ open\ file\ \{\}"{}},\ fileName));}
+\DoxyCodeLine{00052\ \}}
+
+\end{DoxyCode}

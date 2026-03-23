@@ -1,0 +1,123 @@
+\doxysection{Logger Class Reference}
+\hypertarget{classLogger}{}\label{classLogger}\index{Logger@{Logger}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structLogger_1_1LevelMap}{Level\+Map}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classLogger_ad766a24576ea8b27ad9d5649cef46d8f}\label{classLogger_ad766a24576ea8b27ad9d5649cef46d8f} 
+enum {\bfseries Level} \{ \newline
+{\bfseries Debug}
+, {\bfseries Info}
+, {\bfseries Warn}
+, {\bfseries Error}
+, \newline
+{\bfseries Critical}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename... Args$>$ }\\static void \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{log}} (Level level, std::\+string\+\_\+view format\+String, Args \&\&...args)
+\begin{DoxyCompactList}\small\item\em Shows a formatted message to the stdout. \end{DoxyCompactList}\item 
+\Hypertarget{classLogger_a5c193fab0be2bffcc7682a54c05e82e6}\label{classLogger_a5c193fab0be2bffcc7682a54c05e82e6} 
+{\footnotesize template$<$typename... Args$>$ }\\static void {\bfseries debug} (std::\+string\+\_\+view fmt, Args \&\&...args)
+\item 
+\Hypertarget{classLogger_a9f018d157be000cd8fb4dcae4eb0665b}\label{classLogger_a9f018d157be000cd8fb4dcae4eb0665b} 
+{\footnotesize template$<$typename... Args$>$ }\\static void {\bfseries info} (std::\+string\+\_\+view fmt, Args \&\&...args)
+\item 
+\Hypertarget{classLogger_a556cdd6bce08fde3352d678128c6a67b}\label{classLogger_a556cdd6bce08fde3352d678128c6a67b} 
+{\footnotesize template$<$typename... Args$>$ }\\static void {\bfseries warn} (std::\+string\+\_\+view fmt, Args \&\&...args)
+\item 
+\Hypertarget{classLogger_afd6cd760978ac309c5ca85ea7ae41571}\label{classLogger_afd6cd760978ac309c5ca85ea7ae41571} 
+{\footnotesize template$<$typename... Args$>$ }\\static void {\bfseries error} (std::\+string\+\_\+view fmt, Args \&\&...args)
+\item 
+\Hypertarget{classLogger_a0df3e8257b647ca2bac087fed13acc9c}\label{classLogger_a0df3e8257b647ca2bac087fed13acc9c} 
+{\footnotesize template$<$typename... Args$>$ }\\static void {\bfseries critical} (std::\+string\+\_\+view fmt, Args \&\&...args)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr std::\+array$<$ std::\+pair$<$ Level, std::\+string\+\_\+view $>$, 5 $>$ \doxymbox{\hyperlink{classLogger_ac57ce315c15d860865345b4fff7250df}{log\+Level\+Strings}}
+\item 
+static constexpr std::\+array \doxymbox{\hyperlink{classLogger_abcc51cb5aa7c53d298e9ec0a1ca59fbd}{log\+Colors}}
+\item 
+\Hypertarget{classLogger_a59f92695de420994caee3136f006b62f}\label{classLogger_a59f92695de420994caee3136f006b62f} 
+static constexpr auto {\bfseries color\+Reset} = "{}\textbackslash{}033\+[0m"{}
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classLogger_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}\index{Logger@{Logger}!log@{log}}
+\index{log@{log}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{log()}{log()}}
+{\footnotesize\ttfamily \label{classLogger_acc0dc3535e3a3682cfbd84416c288fc4} 
+template$<$typename... Args$>$ \\
+void Logger::\+log (\begin{DoxyParamCaption}\item[{Level}]{level}{, }\item[{std::\+string\+\_\+view}]{format\+String}{, }\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Shows a formatted message to the stdout. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Args} & Format arguments \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em level} & log level \\
+\hline
+{\em format\+String} & Format string \\
+\hline
+{\em args} & arguments to be formatted into the message \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-variable-members}
+\Hypertarget{classLogger_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classLogger_abcc51cb5aa7c53d298e9ec0a1ca59fbd}\index{Logger@{Logger}!logColors@{logColors}}
+\index{logColors@{logColors}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{logColors}{logColors}}
+{\footnotesize\ttfamily \label{classLogger_abcc51cb5aa7c53d298e9ec0a1ca59fbd} 
+std::\+array Logger::\+log\+Colors\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[36m"{}},\ }
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[32m"{}},\ }
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[33m"{}},\ }
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[31m"{}},\ }
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)033[35m"{}}\ \ }
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\Hypertarget{classLogger_ac57ce315c15d860865345b4fff7250df}\index{Logger@{Logger}!logLevelStrings@{logLevelStrings}}
+\index{logLevelStrings@{logLevelStrings}!Logger@{Logger}}
+\doxysubsubsection{\texorpdfstring{logLevelStrings}{logLevelStrings}}
+{\footnotesize\ttfamily \label{classLogger_ac57ce315c15d860865345b4fff7250df} 
+std::\+array$<$std::\+pair$<$Level, std::\+string\+\_\+view$>$, 5$>$ Logger::\+log\+Level\+Strings\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{\{\{Debug,\ \textcolor{stringliteral}{"{}Debug"{}}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Info,\ \textcolor{stringliteral}{"{}Info"{}}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Warn,\ \textcolor{stringliteral}{"{}Warn"{}}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Error,\ \textcolor{stringliteral}{"{}Error"{}}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{Critical,\ \textcolor{stringliteral}{"{}Critical"{}}\}\}\}}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+lib/\+logging.\+h\item 
+lib/\+logging.\+inl\end{DoxyCompactItemize}

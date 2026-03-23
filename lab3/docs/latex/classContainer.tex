@@ -1,0 +1,104 @@
+\doxysection{Container\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classContainer}{}\label{classContainer}\index{Container$<$ T $>$@{Container$<$ T $>$}}
+
+
+Inheritance diagram for Container\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{classContainer__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classContainer_a1a1a05a859f465b411dd184aef5d8c09}\label{classContainer_a1a1a05a859f465b411dd184aef5d8c09} 
+virtual T \& {\bfseries operator\+[$\,$]\+} (int i)=0
+\item 
+\Hypertarget{classContainer_a830c66023f89ec6b646c6a2282d2220c}\label{classContainer_a830c66023f89ec6b646c6a2282d2220c} 
+virtual const T \& {\bfseries operator\+[$\,$]\+} (int i) const =0
+\item 
+\Hypertarget{classContainer_a7eac4bf9cc806fd608eeeb314fe99a77}\label{classContainer_a7eac4bf9cc806fd608eeeb314fe99a77} 
+virtual T \& {\bfseries at} (int i)=0
+\item 
+\Hypertarget{classContainer_a9eb038a1f22169f3762b1cd36797e025}\label{classContainer_a9eb038a1f22169f3762b1cd36797e025} 
+virtual const T \& {\bfseries at} (int i) const =0
+\item 
+\Hypertarget{classContainer_a198dc7d8a1cd928acc2cdba90a625ada}\label{classContainer_a198dc7d8a1cd928acc2cdba90a625ada} 
+virtual T \texorpdfstring{$\ast$}{*} {\bfseries begin} ()=0
+\item 
+\Hypertarget{classContainer_ad663f14a907f7e36fe00f67bfbe895ff}\label{classContainer_ad663f14a907f7e36fe00f67bfbe895ff} 
+virtual T \texorpdfstring{$\ast$}{*} {\bfseries end} ()=0
+\item 
+\Hypertarget{classContainer_a30ac184b1c8d724f9584360396832374}\label{classContainer_a30ac184b1c8d724f9584360396832374} 
+virtual const T \texorpdfstring{$\ast$}{*} {\bfseries begin} () const =0
+\item 
+\Hypertarget{classContainer_a619f1c808c8e3d1b4092b8df18a55a3b}\label{classContainer_a619f1c808c8e3d1b4092b8df18a55a3b} 
+virtual const T \texorpdfstring{$\ast$}{*} {\bfseries end} () const =0
+\item 
+\Hypertarget{classContainer_a2c08a1b28cc41e33d67cd2e452633ec6}\label{classContainer_a2c08a1b28cc41e33d67cd2e452633ec6} 
+virtual int {\bfseries size} () const =0
+\item 
+virtual bool \doxymbox{\hyperlink{classContainer_a75a0381931d37a53b6d23922a742e6c8}{append}} (T value)=0
+\item 
+virtual std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$ $>$ \doxymbox{\hyperlink{classContainer_a0de74f462ea09bc04d2077f22899dd38}{copy}} () const =0
+\item 
+void \doxymbox{\hyperlink{classContainer_a9e17683bf16ceaa02efb0ca4ecc2c2e2}{load}} (const std::\+string\+\_\+view \&line, std::\+move\+\_\+only\+\_\+function$<$ T(const std::\+string\+\_\+view \&) const $>$ converter)
+\begin{DoxyCompactList}\small\item\em Loads a \+\#\+SEPARATORS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classContainer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classContainer_a75a0381931d37a53b6d23922a742e6c8}\index{Container$<$ T $>$@{Container$<$ T $>$}!append@{append}}
+\index{append@{append}!Container$<$ T $>$@{Container$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily \label{classContainer_a75a0381931d37a53b6d23922a742e6c8} 
+template$<$typename T$>$ \\
+virtual bool \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$::\+append (\begin{DoxyParamCaption}\item[{T}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{List$<$ T $>$}}.
+
+\Hypertarget{classContainer_a0de74f462ea09bc04d2077f22899dd38}\index{Container$<$ T $>$@{Container$<$ T $>$}!copy@{copy}}
+\index{copy@{copy}!Container$<$ T $>$@{Container$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{classContainer_a0de74f462ea09bc04d2077f22899dd38} 
+template$<$typename T$>$ \\
+virtual std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$ $>$ \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$::\+copy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \doxymbox{\hyperlink{classList_a054613f874b94aab67ad9d0f879fe93a}{List$<$ T $>$}}.
+
+\Hypertarget{classContainer_a9e17683bf16ceaa02efb0ca4ecc2c2e2}\index{Container$<$ T $>$@{Container$<$ T $>$}!load@{load}}
+\index{load@{load}!Container$<$ T $>$@{Container$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{load()}{load()}}
+{\footnotesize\ttfamily \label{classContainer_a9e17683bf16ceaa02efb0ca4ecc2c2e2} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$::\+load (\begin{DoxyParamCaption}\item[{const std::\+string\+\_\+view \&}]{input}{, }\item[{std::\+move\+\_\+only\+\_\+function$<$ T(const std::\+string\+\_\+view \&) const $>$}]{converter}{}\end{DoxyParamCaption})}
+
+
+
+Loads a \+\#\+SEPARATORS. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & Type of the held item \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em input} & String to load from \\
+\hline
+{\em converter} & Converter function to convert from string\+\_\+view to \+\#T \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+lib/\+containers/\+container.\+h\item 
+lib/\+containers/\+container.\+inl\end{DoxyCompactItemize}

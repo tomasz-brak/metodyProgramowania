@@ -1,0 +1,110 @@
+\doxysection{alghoritms.\+inl}
+\hypertarget{alghoritms_8inl_source}{}\label{alghoritms_8inl_source}\index{lib/alghoritms.inl@{lib/alghoritms.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}alghoritms.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}containers/container.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}containers/list.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00019\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00020\ std::pair<int,\ int>}
+\DoxyCodeLine{00021\ findRangeBoundaries(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ \textcolor{keywordtype}{int}\ pos,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}(\textcolor{keyword}{const}\ T\ \&)>\ match)\ \{}
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordflow}{if}\ (pos\ <\ 0\ ||\ pos\ >=\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(container.size()))\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ \{-\/1,\ -\/1\};}
+\DoxyCodeLine{00025\ \ \ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordtype}{int}\ first\ =\ pos;}
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{int}\ last\ =\ pos;}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{auto}\ targetVal\ =\ match(container.at(pos));}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{comment}{//\ Find\ first\ occurrence\ (scan\ left)}}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordflow}{while}\ (first\ >\ 0\ \&\&\ match(container.at(first\ -\/\ 1))\ ==\ targetVal)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ first-\/-\/;}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{comment}{//\ Find\ last\ occurrence\ (scan\ right)}}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordflow}{while}\ (last\ <\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(container.size())\ -\/\ 1\ \&\&}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ match(container.at(last\ +\ 1))\ ==\ targetVal)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ last++;}
+\DoxyCodeLine{00040\ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \textcolor{keywordflow}{return}\ \{first,\ last\};}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00058\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00059\ \textcolor{keywordtype}{int}\ interpolationSearch(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ \textcolor{keyword}{const}\ T\ \&target,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}(\textcolor{keyword}{const}\ T\ \&)>\ match)\ \{}
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{int}\ low\ =\ 0;}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{int}\ high\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(container.size())\ -\/\ 1;}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ targetVal\ =\ match(target);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordflow}{while}\ (low\ <=\ high)\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ lowVal\ =\ match(container.at(low));}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ highVal\ =\ match(container.at(high));}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (targetVal\ <\ lowVal\ ||\ targetVal\ >\ highVal)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{int}\ pos;}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{if}\ (highVal\ ==\ lowVal)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ pos\ =\ low;}
+\DoxyCodeLine{00075\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ pos\ =\ low\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}((double(high\ -\/\ low)\ /\ (highVal\ -\/\ lowVal))\ *}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (targetVal\ -\/\ lowVal));}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ posVal\ =\ match(container.at(pos));}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{if}\ (posVal\ ==\ targetVal)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pos;}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{if}\ (posVal\ <\ targetVal)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ low\ =\ pos\ +\ 1;}
+\DoxyCodeLine{00087\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ high\ =\ pos\ -\/\ 1;}
+\DoxyCodeLine{00089\ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00092\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00103\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00104\ \textcolor{keywordtype}{int}\ binarySearch(\textcolor{keyword}{const}\ \doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&container,\ \textcolor{keyword}{const}\ T\ \&target,}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}(\textcolor{keyword}{const}\ T\ \&)>\ match)\ \{}
+\DoxyCodeLine{00106\ \ \ \textcolor{keywordtype}{int}\ low\ =\ 0;}
+\DoxyCodeLine{00107\ \ \ \textcolor{keywordtype}{int}\ high\ =\ container.size()\ -\/\ 1;}
+\DoxyCodeLine{00108\ \ \ \textcolor{keyword}{auto}\ targetValue\ =\ match(target);}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \textcolor{keywordflow}{while}\ (low\ <=\ high)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{int}\ pos\ =\ low\ +\ (high\ -\/\ low)\ /\ 2;}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keyword}{auto}\ posValue\ =\ match(container.at(pos));}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{if}\ (posValue\ ==\ targetValue)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pos;}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{if}\ (posValue\ >\ targetValue)\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ high\ =\ pos\ -\/\ 1;}
+\DoxyCodeLine{00119\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ low\ =\ pos\ +\ 1;}
+\DoxyCodeLine{00121\ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \ \ \}}
+\DoxyCodeLine{00123\ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00124\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{template}\ <Hashable\ T>}
+\DoxyCodeLine{00133\ std::unique\_ptr<Container<T>>\ uniqueElements(\doxymbox{\hyperlink{classContainer}{Container<T>}}\ \&values)\ \{}
+\DoxyCodeLine{00134\ \ \ \textcolor{keyword}{auto}\ comp\ =\ [](\textcolor{keyword}{const}\ T\ \&a,\ \textcolor{keyword}{const}\ T\ \&b)\ \{\ \textcolor{keywordflow}{return}\ *a\ <\ *b;\ \};}
+\DoxyCodeLine{00135\ \ \ \textcolor{comment}{//\ https://stackoverflow.com/questions/70656353/declare-\/and-\/define-\/custom-\/stdset-\/comparator}}
+\DoxyCodeLine{00136\ \ \ \textcolor{keyword}{auto}\ hashset\ =\ std::set<T,\ decltype(comp)>(comp);}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&value\ :\ values)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ hashset.insert(std::move(value));}
+\DoxyCodeLine{00140\ \ \ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \textcolor{keywordflow}{return}\ std::make\_unique<List<T>>(std::move(hashset));}
+\DoxyCodeLine{00143\ \};}
+
+\end{DoxyCode}

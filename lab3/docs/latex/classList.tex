@@ -1,0 +1,341 @@
+\doxysection{List\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classList}{}\label{classList}\index{List$<$ T $>$@{List$<$ T $>$}}
+
+
+Inheritance diagram for List\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{classList__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for List\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{classList__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classList_aaa6a3d24431f6f12568accf6f5392713}{List}} (std::\+initializer\+\_\+list$<$ T $>$ init)
+\begin{DoxyCompactList}\small\item\em initializer list constructor Creates a list object form an initializer list of elements \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename Compare$>$ }\\\doxymbox{\hyperlink{classList_a9f0ada6e2d4bde40363aa5ee394ad464}{List}} (std::\+set$<$ T, Compare $>$ \&\&s)
+\begin{DoxyCompactList}\small\item\em Creates a \doxylink{classList}{List} from a Set of unique\+\_\+ptr. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{classList_aecd22ded25c7f68ec541d0b0d26ed2fd}{List}} (const std::\+set$<$ T $>$ \&s)
+\begin{DoxyCompactList}\small\item\em Creates a list from a set. \end{DoxyCompactList}\item 
+T \& \doxymbox{\hyperlink{classList_ab65d6fe966f72881078e83b26f954dd3}{operator\+[$\,$]\+}} (int i) override
+\item 
+const T \& \doxymbox{\hyperlink{classList_a3ddbd64246b2ff27bcde1919c3c4701a}{operator\+[$\,$]\+}} (int i) const override
+\item 
+T \& \doxymbox{\hyperlink{classList_aadeabbe5f4deca86cb98b0512e5ed22a}{at}} (int i) override
+\item 
+const T \& \doxymbox{\hyperlink{classList_a3f3090c628332d6d30895d43c092e05c}{at}} (int i) const override
+\item 
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList_a24562b5df29e30902befdbfde4d89b14}{begin}} () override
+\item 
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList_ac6e4cc3fab43d36df0489017faca8088}{end}} () override
+\item 
+const T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList_ab4898e600a7634729832fc1c8be86d54}{begin}} () const override
+\item 
+const T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList_aa6df48f9448c2011704305b5158c0fa9}{end}} () const override
+\item 
+int \doxymbox{\hyperlink{classList_a74e444cc1e8ebd8ff1d3de5a3870ee7c}{size}} () const override
+\item 
+void \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{ensure\+\_\+capacity}} (int desired)
+\begin{DoxyCompactList}\small\item\em Extends the capacity of the \doxylink{classList}{List} storage Extends the capacity of the underlaying storage pointer, doubling every time. \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{classList_aa7be1bd4e8cafd153026f588c806502e}{slice}} (int min, int max)
+\begin{DoxyCompactList}\small\item\em Slices the list in place. \end{DoxyCompactList}\item 
+bool \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{append}} (T value) override
+\begin{DoxyCompactList}\small\item\em Appends a value to the storage capacity is managed automaticaly. Value gets moved. \end{DoxyCompactList}\item 
+std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$ $>$ \doxymbox{\hyperlink{classList_a054613f874b94aab67ad9d0f879fe93a}{copy}} () const override
+\begin{DoxyCompactList}\small\item\em Copies the \doxylink{classList}{List}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{classContainer_a9e17683bf16ceaa02efb0ca4ecc2c2e2}{load}} (const std::\+string\+\_\+view \&line, std::\+move\+\_\+only\+\_\+function$<$ T(const std::\+string\+\_\+view \&) const $>$ converter)
+\begin{DoxyCompactList}\small\item\em Loads a \+\#\+SEPARATORS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-constructors}
+\Hypertarget{classList_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classList_aaa6a3d24431f6f12568accf6f5392713}\index{List$<$ T $>$@{List$<$ T $>$}!List@{List}}
+\index{List@{List}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{List()}{List()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classList_aaa6a3d24431f6f12568accf6f5392713} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+\+List (\begin{DoxyParamCaption}\item[{std::\+initializer\+\_\+list$<$ T $>$}]{init}{}\end{DoxyParamCaption})}
+
+
+
+initializer list constructor Creates a list object form an initializer list of elements 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \doxylink{classContainer}{Container} type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em init} & initializer list \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classList_a9f0ada6e2d4bde40363aa5ee394ad464}\index{List$<$ T $>$@{List$<$ T $>$}!List@{List}}
+\index{List@{List}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{List()}{List()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classList_a9f0ada6e2d4bde40363aa5ee394ad464} 
+template$<$typename T$>$ \\
+template$<$typename Compare$>$ \\
+\doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+\+List (\begin{DoxyParamCaption}\item[{std::\+set$<$ T, Compare $>$ \&\&}]{s}{}\end{DoxyParamCaption})}
+
+
+
+Creates a \doxylink{classList}{List} from a Set of unique\+\_\+ptr. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Compare} & Any comparator is ok \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & The set with unique\+\_\+ptr objects \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classList_aecd22ded25c7f68ec541d0b0d26ed2fd}\index{List$<$ T $>$@{List$<$ T $>$}!List@{List}}
+\index{List@{List}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{List()}{List()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classList_aecd22ded25c7f68ec541d0b0d26ed2fd} 
+template$<$typename T$>$ \\
+\doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+\+List (\begin{DoxyParamCaption}\item[{const std::\+set$<$ T $>$ \&}]{s}{}\end{DoxyParamCaption})}
+
+
+
+Creates a list from a set. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \doxylink{classContainer}{Container} type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Set to be created from (copy values) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classList_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}\index{List$<$ T $>$@{List$<$ T $>$}!append@{append}}
+\index{append@{append}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{append()}{append()}}
+{\footnotesize\ttfamily \label{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d} 
+template$<$typename T$>$ \\
+bool \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+append (\begin{DoxyParamCaption}\item[{T}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Appends a value to the storage capacity is managed automaticaly. Value gets moved. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_a3f3090c628332d6d30895d43c092e05c}\index{List$<$ T $>$@{List$<$ T $>$}!at@{at}}
+\index{at@{at}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classList_a3f3090c628332d6d30895d43c092e05c} 
+template$<$typename T$>$ \\
+const T \& \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+at (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_aadeabbe5f4deca86cb98b0512e5ed22a}\index{List$<$ T $>$@{List$<$ T $>$}!at@{at}}
+\index{at@{at}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classList_aadeabbe5f4deca86cb98b0512e5ed22a} 
+template$<$typename T$>$ \\
+T \& \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+at (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_ab4898e600a7634729832fc1c8be86d54}\index{List$<$ T $>$@{List$<$ T $>$}!begin@{begin}}
+\index{begin@{begin}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classList_ab4898e600a7634729832fc1c8be86d54} 
+template$<$typename T$>$ \\
+const T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_a24562b5df29e30902befdbfde4d89b14}\index{List$<$ T $>$@{List$<$ T $>$}!begin@{begin}}
+\index{begin@{begin}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classList_a24562b5df29e30902befdbfde4d89b14} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_a054613f874b94aab67ad9d0f879fe93a}\index{List$<$ T $>$@{List$<$ T $>$}!copy@{copy}}
+\index{copy@{copy}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{classList_a054613f874b94aab67ad9d0f879fe93a} 
+template$<$typename T$>$ \\
+std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$ $>$ \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+copy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Copies the \doxylink{classList}{List}. 
+
+
+\begin{DoxyItemize}
+\item For lists consisting of non-\/pointer types it perfroms a normal copy
+\item Pointers can provide a \doxylink{classList_a054613f874b94aab67ad9d0f879fe93a}{copy} function
+\item If not copy constructor is used 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \doxylink{classContainer}{Container} type \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+unique\+\_\+ptr with the copy of the container 
+\end{DoxyReturn}
+
+\end{DoxyItemize}
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_aa6df48f9448c2011704305b5158c0fa9}\index{List$<$ T $>$@{List$<$ T $>$}!end@{end}}
+\index{end@{end}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classList_aa6df48f9448c2011704305b5158c0fa9} 
+template$<$typename T$>$ \\
+const T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_ac6e4cc3fab43d36df0489017faca8088}\index{List$<$ T $>$@{List$<$ T $>$}!end@{end}}
+\index{end@{end}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classList_ac6e4cc3fab43d36df0489017faca8088} 
+template$<$typename T$>$ \\
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_a1120686d04859a6f15909e877cdf1155}\index{List$<$ T $>$@{List$<$ T $>$}!ensure\_capacity@{ensure\_capacity}}
+\index{ensure\_capacity@{ensure\_capacity}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ensure\_capacity()}{ensure\_capacity()}}
+{\footnotesize\ttfamily \label{classList_a1120686d04859a6f15909e877cdf1155} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+ensure\+\_\+capacity (\begin{DoxyParamCaption}\item[{int}]{desired}{}\end{DoxyParamCaption})}
+
+
+
+Extends the capacity of the \doxylink{classList}{List} storage Extends the capacity of the underlaying storage pointer, doubling every time. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em desired} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classList_a3ddbd64246b2ff27bcde1919c3c4701a}\index{List$<$ T $>$@{List$<$ T $>$}!operator\+[]\+@{operator[]}}
+\index{operator\+[]\+@{operator[]}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classList_a3ddbd64246b2ff27bcde1919c3c4701a} 
+template$<$typename T$>$ \\
+const T \& \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+operator\+[$\,$]\+ (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_ab65d6fe966f72881078e83b26f954dd3}\index{List$<$ T $>$@{List$<$ T $>$}!operator\+[]\+@{operator[]}}
+\index{operator\+[]\+@{operator[]}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classList_ab65d6fe966f72881078e83b26f954dd3} 
+template$<$typename T$>$ \\
+T \& \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+operator\+[$\,$]\+ (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_a74e444cc1e8ebd8ff1d3de5a3870ee7c}\index{List$<$ T $>$@{List$<$ T $>$}!size@{size}}
+\index{size@{size}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{classList_a74e444cc1e8ebd8ff1d3de5a3870ee7c} 
+template$<$typename T$>$ \\
+int \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classList_aa7be1bd4e8cafd153026f588c806502e}\index{List$<$ T $>$@{List$<$ T $>$}!slice@{slice}}
+\index{slice@{slice}!List$<$ T $>$@{List$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{slice()}{slice()}}
+{\footnotesize\ttfamily \label{classList_aa7be1bd4e8cafd153026f588c806502e} 
+template$<$typename T$>$ \\
+void \doxymbox{\hyperlink{classList}{List}}$<$ T $>$::\+slice (\begin{DoxyParamCaption}\item[{int}]{min}{, }\item[{int}]{max}{}\end{DoxyParamCaption})}
+
+
+
+Slices the list in place. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \doxylink{classContainer}{Container} type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em min} & low bound of the slice (index) \\
+\hline
+{\em max} & high bound of the slice (index) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+lib/\+containers/\+list.\+h\item 
+lib/\+containers/\+list.\+inl\end{DoxyCompactItemize}

@@ -1,0 +1,19 @@
+\doxysection{reader.\+h}
+\hypertarget{reader_8h_source}{}\label{reader_8h_source}\index{src/reader.h@{src/reader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}containers/list.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{struct\ }\doxymbox{\hyperlink{structDataset}{Dataset}}\ \{}
+\DoxyCodeLine{00006\ \ \ UniqueList<long\ long>\ data\ =}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ std::make\_unique<List<std::unique\_ptr<long\ long>>>();}
+\DoxyCodeLine{00008\ \ \ UniqueList<long\ long>\ query\ =}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ std::make\_unique<List<std::unique\_ptr<long\ long>>>();}
+\DoxyCodeLine{00010\ \ \ std::unique\_ptr<Dataset>\ \doxymbox{\hyperlink{structDataset_a219fccf3da9830994cb9e158d0b9c49b}{copy}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00011\ \};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ UniqueList<Dataset>\ loadData(\textcolor{keyword}{const}\ std::string\_view\ \&path);}
+
+\end{DoxyCode}

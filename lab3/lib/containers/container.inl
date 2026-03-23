@@ -5,6 +5,13 @@
 #include <memory>
 #include <string_view>
 
+/**
+ * @brief Extracts an arbirary amount of char from a string until it finds a
+ * sparator. Line gets the chars removed.
+ *
+ * @param line Line to extract the chars from. Gets modified
+ * @return Extracted token, without the separator.
+ */
 inline std::string_view next_token(std::string_view &line) {
   const auto start = line.find_first_not_of(SEPARATORS);
   if (start == std::string_view::npos) {
@@ -26,6 +33,13 @@ inline std::string_view next_token(std::string_view &line) {
   return token;
 }
 
+/**
+ * @brief Loads a @ref #SEPARATORS
+ *
+ * @tparam T Type of the held item
+ * @param input String to load from
+ * @param converter Converter function to convert from string_view to #T
+ */
 template <typename T>
 void Container<T>::load(
     const std::string_view &input,
@@ -42,6 +56,15 @@ void Container<T>::load(
   }
 }
 
+/**
+ * @brief Formatter specialization for @ref std::unique_ptr.
+ *
+ * If the pointer is valid, it delegates formatting to the formatter for type
+ * #T. If the pointer is null, it outputs the string "null".
+ *
+ * @tparam T The type of the object managed by the unique_ptr.
+ * @tparam CharT Character type
+ */
 template <typename T, typename CharT>
 struct std::formatter<std::unique_ptr<T>, CharT> : std::formatter<T, CharT> {
   // Inheriting from std::formatter<T, CharT> provides parse,
@@ -55,6 +78,14 @@ struct std::formatter<std::unique_ptr<T>, CharT> : std::formatter<T, CharT> {
   }
 };
 
+/**
+ * @brief Formatter specialization for @ref Container.
+ *
+ * Serializes the container with a space delimiter.
+ *
+ * @tparam T The type of elements stored in the @ref Container.
+ * @tparam CharT Character type (typically char or wchar_t).
+ */
 template <typename T, typename CharT>
 struct std::formatter<Container<T>, CharT> {
   constexpr auto parse(std::format_parse_context &ctx) { return ctx.begin(); }

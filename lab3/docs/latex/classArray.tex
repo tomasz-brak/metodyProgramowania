@@ -1,0 +1,130 @@
+\doxysection{Array\texorpdfstring{$<$}{<} T, s \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classArray}{}\label{classArray}\index{Array$<$ T, s $>$@{Array$<$ T, s $>$}}
+
+
+Inheritance diagram for Array\texorpdfstring{$<$}{<} T, s \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{classArray__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Array\texorpdfstring{$<$}{<} T, s \texorpdfstring{$>$}{>}:\+
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=162pt]{classArray__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+T \& \doxymbox{\hyperlink{classArray_afcd9326d359aff19b0aa89d32a7de01d}{operator\+[$\,$]\+}} (int i) override
+\item 
+const T \& \doxymbox{\hyperlink{classArray_a530752c3d7161f2da3f8beb350f20897}{operator\+[$\,$]\+}} (int i) const override
+\item 
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classArray_aabb721c567a13c33d43b80eed2fd55fc}{begin}} () override
+\item 
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classArray_a4d0fb1178adff3ebd63106e1940bd497}{end}} () override
+\item 
+\Hypertarget{classArray_a98ceb4bbbade0b21f3e7a32cb15990a1}\label{classArray_a98ceb4bbbade0b21f3e7a32cb15990a1} 
+void {\bfseries load} (std::\+string\+\_\+view \&line, std::\+function$<$ T \texorpdfstring{$\ast$}{*}(const std::\+string\+\_\+view \&)$>$ converter)
+\item 
+int \doxymbox{\hyperlink{classArray_a2cb532a6740bab5841f5535bc85e59f0}{size}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual T \& {\bfseries at} (int i)=0
+\item 
+virtual const T \& {\bfseries at} (int i) const =0
+\item 
+virtual const T \texorpdfstring{$\ast$}{*} {\bfseries begin} () const =0
+\item 
+virtual const T \texorpdfstring{$\ast$}{*} {\bfseries end} () const =0
+\item 
+virtual bool \doxymbox{\hyperlink{classContainer_a75a0381931d37a53b6d23922a742e6c8}{append}} (T value)=0
+\item 
+virtual std::\+unique\+\_\+ptr$<$ \doxymbox{\hyperlink{classContainer}{Container}}$<$ T $>$ $>$ \doxymbox{\hyperlink{classContainer_a0de74f462ea09bc04d2077f22899dd38}{copy}} () const =0
+\item 
+void \doxymbox{\hyperlink{classContainer_a9e17683bf16ceaa02efb0ca4ecc2c2e2}{load}} (const std::\+string\+\_\+view \&line, std::\+move\+\_\+only\+\_\+function$<$ T(const std::\+string\+\_\+view \&) const $>$ converter)
+\begin{DoxyCompactList}\small\item\em Loads a \+\#\+SEPARATORS. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classArray_a99e7c595302f3f103cccb656656de8e7}\label{classArray_a99e7c595302f3f103cccb656656de8e7} 
+T {\bfseries data} \+[s]\+
+\item 
+\Hypertarget{classArray_ac4ed877b7ed1237a3db65f9dd9f663cf}\label{classArray_ac4ed877b7ed1237a3db65f9dd9f663cf} 
+int {\bfseries size\+\_\+} = s
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classArray_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classArray_aabb721c567a13c33d43b80eed2fd55fc}\index{Array$<$ T, s $>$@{Array$<$ T, s $>$}!begin@{begin}}
+\index{begin@{begin}!Array$<$ T, s $>$@{Array$<$ T, s $>$}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily \label{classArray_aabb721c567a13c33d43b80eed2fd55fc} 
+template$<$typename T, int s$>$ \\
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classArray}{Array}}$<$ T, s $>$::\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classArray_a4d0fb1178adff3ebd63106e1940bd497}\index{Array$<$ T, s $>$@{Array$<$ T, s $>$}!end@{end}}
+\index{end@{end}!Array$<$ T, s $>$@{Array$<$ T, s $>$}}
+\doxysubsubsection{\texorpdfstring{end()}{end()}}
+{\footnotesize\ttfamily \label{classArray_a4d0fb1178adff3ebd63106e1940bd497} 
+template$<$typename T, int s$>$ \\
+T \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{classArray}{Array}}$<$ T, s $>$::\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classArray_a530752c3d7161f2da3f8beb350f20897}\index{Array$<$ T, s $>$@{Array$<$ T, s $>$}!operator\+[]\+@{operator[]}}
+\index{operator\+[]\+@{operator[]}!Array$<$ T, s $>$@{Array$<$ T, s $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classArray_a530752c3d7161f2da3f8beb350f20897} 
+template$<$typename T, int s$>$ \\
+const T \& \doxymbox{\hyperlink{classArray}{Array}}$<$ T, s $>$::\+operator\+[$\,$]\+ (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classArray_afcd9326d359aff19b0aa89d32a7de01d}\index{Array$<$ T, s $>$@{Array$<$ T, s $>$}!operator\+[]\+@{operator[]}}
+\index{operator\+[]\+@{operator[]}!Array$<$ T, s $>$@{Array$<$ T, s $>$}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classArray_afcd9326d359aff19b0aa89d32a7de01d} 
+template$<$typename T, int s$>$ \\
+T \& \doxymbox{\hyperlink{classArray}{Array}}$<$ T, s $>$::\+operator\+[$\,$]\+ (\begin{DoxyParamCaption}\item[{int}]{i}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+\Hypertarget{classArray_a2cb532a6740bab5841f5535bc85e59f0}\index{Array$<$ T, s $>$@{Array$<$ T, s $>$}!size@{size}}
+\index{size@{size}!Array$<$ T, s $>$@{Array$<$ T, s $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{classArray_a2cb532a6740bab5841f5535bc85e59f0} 
+template$<$typename T, int s$>$ \\
+int \doxymbox{\hyperlink{classArray}{Array}}$<$ T, s $>$::\+size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \doxymbox{\hyperlink{classContainer}{Container$<$ T $>$}}.
+
+
+
+The documentation for this class was generated from the following files:\+\begin{DoxyCompactItemize}
+\item 
+lib/\+containers/\+array.\+h\item 
+lib/\+containers/\+array.\+cpp\end{DoxyCompactItemize}

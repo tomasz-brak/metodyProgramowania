@@ -1,0 +1,132 @@
+\doxysection{list.\+inl}
+\hypertarget{list_8inl_source}{}\label{list_8inl_source}\index{lib/containers/list.inl@{lib/containers/list.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}containers/container.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}list.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{bool}\ \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{List<T>::append}}(T\ value)\ \{}
+\DoxyCodeLine{00016\ \ \ \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{ensure\_capacity}}(size\_\ +\ 1);}
+\DoxyCodeLine{00017\ \ \ data\_[size\_]\ =\ std::move(value);}
+\DoxyCodeLine{00018\ \ \ size\_++;}
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00020\ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{List<T>::ensure\_capacity}}(\textcolor{keywordtype}{int}\ desired)\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ Logger::critical(\textcolor{stringliteral}{"{}Attempted\ to\ extend\ a\ null\ list!"{}});}
+\DoxyCodeLine{00031\ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordflow}{if}\ (desired\ <=\ capacity\_)\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00034\ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keywordtype}{int}\ new\_capacity\ =\ (capacity\_\ ==\ 0)\ ?\ 4\ :\ capacity\_;}
+\DoxyCodeLine{00037\ \ \ \textcolor{keywordflow}{while}\ (new\_capacity\ <\ desired)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ new\_capacity\ *=\ 2;}
+\DoxyCodeLine{00039\ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ std::unique\_ptr<T[]>\ new\_data\ =\ std::make\_unique<T[]>(new\_capacity);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{comment}{//\ Only\ attempt\ to\ move\ if\ we\ actually\ have\ existing\ data}}
+\DoxyCodeLine{00044\ \ \ \textcolor{keywordflow}{if}\ (data\_)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ size\_;\ ++i)\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ new\_data[i]\ =\ std::move(data\_[i]);}
+\DoxyCodeLine{00047\ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ data\_\ =\ std::move(new\_data);}
+\DoxyCodeLine{00051\ \ \ capacity\_\ =\ new\_capacity;}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00060\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ List<T>::List(std::initializer\_list<T>\ init)\ \{}
+\DoxyCodeLine{00061\ \ \ \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{ensure\_capacity}}(init.size());}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&val\ :\ init)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{append}}(val);}
+\DoxyCodeLine{00064\ \ \ \}}
+\DoxyCodeLine{00065\ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ List<T>::List(\textcolor{keyword}{const}\ std::set<T>\ \&s)\ \{}
+\DoxyCodeLine{00074\ \ \ \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{ensure\_capacity}}(s.size());}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&val\ :\ s)\ \{}
+\DoxyCodeLine{00076\ \ \ \ \ \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{append}}(val);}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ \}}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00088\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Compare>}
+\DoxyCodeLine{00089\ List<T>::List(std::set<T,\ Compare>\ \&\&s)\ \{}
+\DoxyCodeLine{00090\ \ \ \doxymbox{\hyperlink{classList_a1120686d04859a6f15909e877cdf1155}{ensure\_capacity}}(s.size());}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&val\ :\ s)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \doxymbox{\hyperlink{classList_ac961b1f3fc8497d3f6e04034b7ac4a1d}{append}}(std::move(\textcolor{keyword}{const\_cast<}T\ \&\textcolor{keyword}{>}(val)));}
+\DoxyCodeLine{00093\ \ \ \}}
+\DoxyCodeLine{00094\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00104\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ std::unique\_ptr<Container<T>>\ \doxymbox{\hyperlink{classList_a054613f874b94aab67ad9d0f879fe93a}{List<T>::copy}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00105\ \ \ \textcolor{keyword}{auto}\ newList\ =\ std::make\_unique<List<T>>();}
+\DoxyCodeLine{00106\ \ \ newList-\/>ensure\_capacity(this-\/>size\_);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ this-\/>size\_;\ ++i)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{if}\ (!data\_[i])\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ newList-\/>append(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\doxymbox{\hyperlink{structis__unique__ptr}{is\_unique\_ptr<T>::value}})\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keyword}{using\ }ElementType\ =\ \textcolor{keyword}{typename}\ T::element\_type;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \textcolor{comment}{//\ Polymorphic\ Clone}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (\textcolor{keyword}{requires}(\textcolor{keyword}{const}\ ElementType\ \&e)\ \{\ e.copy();\ \})\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ newList-\/>append(data\_[i]-\/>\doxymbox{\hyperlink{classList_a054613f874b94aab67ad9d0f879fe93a}{copy}}());}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \textcolor{comment}{//\ Try\ to\ use\ copy\ constructor\ if\ it\ exists}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_copy\_constructible\_v<ElementType>)\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ newList-\/>append(std::make\_unique<ElementType>(*data\_[i]));}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Error\ out\ if\ not\ able\ to\ copy}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(std::is\_copy\_constructible\_v<ElementType>,}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Type\ inside\ unique\_ptr\ must\ have\ a\ .copy()\ method\ or\ a\ "{}}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}copy\ constructor."{}});}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \textcolor{comment}{//\ Standard\ non-\/pointer\ types}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ newList-\/>append(data\_[i]);}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \textcolor{keywordflow}{return}\ newList;}
+\DoxyCodeLine{00136\ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00145\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classList_aa7be1bd4e8cafd153026f588c806502e}{List<T>::slice}}(\textcolor{keywordtype}{int}\ min,\ \textcolor{keywordtype}{int}\ max)\ \{}
+\DoxyCodeLine{00146\ \ \ \textcolor{comment}{//\ Bounds\ checking\ and\ validation}}
+\DoxyCodeLine{00147\ \ \ \textcolor{keywordflow}{if}\ (min\ <\ 0)}
+\DoxyCodeLine{00148\ \ \ \ \ min\ =\ 0;}
+\DoxyCodeLine{00149\ \ \ \textcolor{keywordflow}{if}\ (max\ >\ size\_)}
+\DoxyCodeLine{00150\ \ \ \ \ max\ =\ size\_;}
+\DoxyCodeLine{00151\ \ \ \textcolor{keywordflow}{if}\ (min\ >=\ max\ ||\ min\ >=\ size\_)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{comment}{//\ Resulting\ slice\ is\ empty}}
+\DoxyCodeLine{00153\ \ \ \ \ data\_.reset();}
+\DoxyCodeLine{00154\ \ \ \ \ size\_\ =\ 0;}
+\DoxyCodeLine{00155\ \ \ \ \ capacity\_\ =\ 0;}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00157\ \ \ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \textcolor{keywordtype}{int}\ new\_size\ =\ max\ -\/\ min;}
+\DoxyCodeLine{00160\ \ \ \textcolor{keywordtype}{int}\ new\_capacity\ =\ new\_size;}
+\DoxyCodeLine{00161\ \ \ std::unique\_ptr<T[]>\ new\_data\ =\ std::make\_unique<T[]>(new\_capacity);}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \textcolor{comment}{//\ Move\ elements\ from\ the\ slice\ range\ to\ the\ new\ storage}}
+\DoxyCodeLine{00164\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ new\_size;\ ++i)\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ new\_data[i]\ =\ std::move(data\_[min\ +\ i]);}
+\DoxyCodeLine{00166\ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \textcolor{comment}{//\ Update\ list\ state}}
+\DoxyCodeLine{00169\ \ \ data\_\ =\ std::move(new\_data);}
+\DoxyCodeLine{00170\ \ \ size\_\ =\ new\_size;}
+\DoxyCodeLine{00171\ \ \ capacity\_\ =\ new\_capacity;}
+\DoxyCodeLine{00172\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,26 @@
+\doxysection{array.\+h}
+\hypertarget{array_8h_source}{}\label{array_8h_source}\index{lib/containers/array.h@{lib/containers/array.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}container.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T,\ \textcolor{keywordtype}{int}\ s>\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{classArray}{Array}}\ :\ \textcolor{keyword}{public}\ \doxymbox{\hyperlink{classContainer}{Container}}<T>\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00008\ \ \ T\ data[s];}
+\DoxyCodeLine{00009\ \ \ \textcolor{keywordtype}{int}\ size\_\ =\ s;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ T\ \&operator[](\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data[i];\ \}}
+\DoxyCodeLine{00012\ \ \ \textcolor{keyword}{const}\ T\ \&operator[](\textcolor{keywordtype}{int}\ i)\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ data[i];\ \}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ T\ *begin()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data;\ \}}
+\DoxyCodeLine{00015\ \ \ T\ *end()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ data\ +\ size\_;\ \}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{void}\ load(std::string\_view\ \&line,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<T\ *(\textcolor{keyword}{const}\ std::string\_view\ \&)>\ converter);}
+\DoxyCodeLine{00019\ \ \ \textcolor{keywordtype}{int}\ size()\textcolor{keyword}{\ const\ override\ }\{\ \textcolor{keywordflow}{return}\ size\_;\ \}}
+\DoxyCodeLine{00020\ \};}
+
+\end{DoxyCode}

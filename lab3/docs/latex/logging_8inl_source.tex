@@ -1,0 +1,18 @@
+\doxysection{logging.\+inl}
+\hypertarget{logging_8inl_source}{}\label{logging_8inl_source}\index{lib/logging.inl@{lib/logging.inl}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}logging.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ Args>}
+\DoxyCodeLine{00013\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{classLogger_acc0dc3535e3a3682cfbd84416c288fc4}{Logger::log}}(Level\ level,\ std::string\_view\ formatString,\ Args\ \&\&...args)\ \{}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ idx\ =\ \textcolor{keyword}{static\_cast<}std::size\_t\textcolor{keyword}{>}(level);}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ std::print(\textcolor{stringliteral}{"{}\{\}[\{\}]\{\}\ "{}},\ logColors[idx],\ logLevelStrings[idx].second,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ colorReset);}
+\DoxyCodeLine{00018\ \ \ std::vprint\_nonunicode(formatString,\ std::make\_format\_args(args...));}
+\DoxyCodeLine{00019\ \ \ std::print(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00020\ \}}
+
+\end{DoxyCode}

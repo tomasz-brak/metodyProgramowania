@@ -1,0 +1,20 @@
+\doxysection{Files.\+h}
+\hypertarget{Files_8h_source}{}\label{Files_8h_source}\index{lib/Files.h@{lib/Files.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ StreamType>}
+\DoxyCodeLine{00007\ StreamType\ promptOpenFile(std::string\ fileDesc,}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::function<\textcolor{keywordtype}{bool}(std::string)>\ verifier,}
+\DoxyCodeLine{00009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ skipPath\ =\ \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00010\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ StreamType>}
+\DoxyCodeLine{00011\ StreamType\ readFile(\textcolor{keyword}{const}\ std::string\_view\ \&fileName);}
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{bool}\ isTxt(std::string\ fileName);}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}Files.inl"{}}}
+
+\end{DoxyCode}
