@@ -1,0 +1,164 @@
+name: Windows MSVC CMake build (all labs)
+
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+
+jobs:
+  discover:
+    name: Discover lab directories
+    runs-on: ubuntu-latest
+    outputs:
+      labs: ${{ steps.set.outputs.labs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find root directories starting with "lab"
+        id: set
+        shell: bash
+        run: |
+          labs_json="$(find . -maxdepth 1 -mindepth 1 -type d -name 'lab*' -printf '%f\n' | sort | jq -R -s -c 'split("\n") | map(select(length>0)')"
+          if [ -z "$labs_json" ] || [ "$labs_json" = "[]" ]; then
+            echo "No lab* directories found in repo root."
+            labs_json="[]"
+          fi
+          echo "labs=$labs_json" >> "$GITHUB_OUTPUT"
+          echo "Discovered: $labs_json"
+
+  build:
+    name: Build ${{ matrix.lab }} (MSVC)
+    needs: discover
+    if: ${{ needs.discover.outputs.labs != '[]' }}
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        lab: ${{ fromJson(needs.discover.outputs.labs) }}
+
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Cache per-lab + source hash. If unchanged, configure/build dirs are restored and build can be skipped/reused.
+      - name: Compute lab source hash
+        id: hash
+        run: |
+          $lab = "${{ matrix.lab }}"
+          if (-not (Test-Path $lab)) {
+            throw "Directory '$lab' not found."
+          }
+
+          # Hash all files except common transient/generated dirs/files.
+          $files = Get-ChildItem -Path $lab -Recurse -File -Force |
+            Where-Object {
+              $_.FullName -notmatch '\\\.git\\' -and
+              $_.FullName -notmatch '\\out\\' -and
+              $_.FullName -notmatch '\\build\\' -and
+              $_.FullName -notmatch '\\docs\\html\\' -and
+              $_.FullName -notmatch '\\docs\\latex\\' -and
+              $_.Name -ne 'compile_commands.json'
+            } |
+            Sort-Object FullName
+
+          $sha = [System.Security.Cryptography.SHA256]::Create()
+          foreach ($f in $files) {
+            $rel = $f.FullName.Substring($PWD.Path.Length).TrimStart('\')
+            $relBytes = [System.Text.Encoding]::UTF8.GetBytes($rel)
+            $sha.TransformBlock($relBytes, 0, $relBytes.Length, $relBytes, 0) | Out-Null
+
+            $bytes = [System.IO.File]::ReadAllBytes($f.FullName)
+            $sha.TransformBlock($bytes, 0, $bytes.Length, $bytes, 0) | Out-Null
+          }
+          $sha.TransformFinalBlock([byte[]]::new(0), 0, 0) | Out-Null
+          $hash = -join ($sha.Hash | ForEach-Object { $_.ToString("x2") })
+
+          "hash=$hash" >> $env:GITHUB_OUTPUT
+          Write-Host "Hash for $lab: $hash"
+
+      - name: Restore CMake build cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ matrix.lab }}/build
+          key: windows-msvc-cmake-${{ matrix.lab }}-${{ steps.hash.outputs.hash }}
+
+      - name: Configure (CMake, Visual Studio 2022)
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          $lab = "${{ matrix.lab }}"
+          if (-not (Test-Path (Join-Path $lab "CMakeLists.txt"))) {
+            throw "Missing CMakeLists.txt in $lab"
+          }
+
+          cmake -S $lab -B "$lab/build" -G "Visual Studio 17 2022" -A x64
+
+      - name: Build (Release)
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          $lab = "${{ matrix.lab }}"
+          cmake --build "$lab/build" --config Release --parallel
+
+      - name: Verify cached build artifacts exist (cache hit path)
+        if: steps.cache.outputs.cache-hit == 'true'
+        run: |
+          $lab = "${{ matrix.lab }}"
+          if (-not (Test-Path "$lab/build")) {
+            throw "Cache hit claimed, but $lab/build is missing."
+          }
+          Write-Host "Reused cached build for $lab"
+
+      - name: Package artifacts for ${{ matrix.lab }}
+        if: always()
+        run: |
+          $lab = "${{ matrix.lab }}"
+          $staging = Join-Path $env:RUNNER_TEMP "$lab-artifact"
+          if (Test-Path $staging) { Remove-Item -Recurse -Force $staging }
+          New-Item -ItemType Directory -Path $staging | Out-Null
+
+          # Include build tree if present
+          if (Test-Path "$lab/build") {
+            Copy-Item "$lab/build" -Destination (Join-Path $staging "build") -Recurse -Force
+          }
+
+          # Include top-level exe/dll/pdb from lab dir if any
+          Get-ChildItem -Path $lab -File -Include *.exe,*.dll,*.pdb -ErrorAction SilentlyContinue |
+            ForEach-Object { Copy-Item $_.FullName -Destination $staging -Force }
+
+          $zipPath = Join-Path $env:RUNNER_TEMP "$lab.zip"
+          if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+          Compress-Archive -Path (Join-Path $staging "*") -DestinationPath $zipPath -Force
+
+          "ZIP_PATH=$zipPath" >> $env:GITHUB_ENV
+
+      - name: Upload artifact zip
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.lab }}-windows-msvc
+          path: ${{ env.ZIP_PATH }}
+          if-no-files-found: warn
+          retention-days: 14
+
+  final-status:
+    name: Final status
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - name: Fail if any lab build failed
+        run: |
+          # build job is a matrix; overall result becomes failure if any matrix entry failed.
+          if [ "${{ needs.build.result }}" != "success" ]; then
+            echo "At least one lab failed to compile."
+            exit 1
+          fi
+          echo "All labs compiled successfully."
