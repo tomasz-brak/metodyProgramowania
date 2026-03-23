@@ -44,7 +44,7 @@ StreamType promptOpenFile(std::string fileDesc,
  */
 template <typename StreamType>
 StreamType readFile(const std::string_view &fileName) {
-  StreamType inFile(fileName);
+  StreamType inFile((std::string(fileName)));
   if (inFile.is_open() && inFile.good()) {
     return inFile;
   }

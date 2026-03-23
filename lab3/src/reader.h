@@ -1,13 +1,13 @@
 #pragma once
-#include "Files.h"
 #include "containers/list.h"
-#include <fstream>
-#include <memory>
 #include <string_view>
 
 struct Dataset {
-  std::unique_ptr<List<int>> data;
-  std::unique_ptr<List<int>> query;
+  UniqueList<long long> data =
+      std::make_unique<List<std::unique_ptr<long long>>>();
+  UniqueList<long long> query =
+      std::make_unique<List<std::unique_ptr<long long>>>();
+  std::unique_ptr<Dataset> copy() const;
 };
 
-std::unique_ptr<List<Dataset>> load_data(const std::string_view &path);
+UniqueList<Dataset> loadData(const std::string_view &path);
