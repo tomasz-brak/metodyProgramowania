@@ -1,10 +1,12 @@
 #pragma once
 #include "Files.h"
+#include "logging.h"
 
+#include <filesystem>
 #include <functional>
 #include <iostream>
 #include <print>
-#include <string>
+#include <stdexcept>
 #include <string>
 /**
  * @brief Promts the user for a filename to open
@@ -23,7 +25,7 @@ StreamType promptOpenFile(std::string fileDesc,
   std::print("{}", fileDesc);
   std::getline(std::cin, filename);
   if (filename == "") {
-    std::print("Trying to open file {}...\n", skipPath);
+    Logger::debug("Opening default path as it was not specified");
     return readFile<StreamType>(skipPath);
   }
   if (!verifier(filename)) {
@@ -31,8 +33,19 @@ StreamType promptOpenFile(std::string fileDesc,
         "Couldn't open a file due to an error in the file name. Filename {}",
         filename));
   }
-  std::print("Trying to open file {}...\n", filename);
-  return readFile<StreamType>(filename);
+  // If a filename exists in the script dir we open that
+  if (std::filesystem::exists(filename)) {
+    Logger::debug("Opening a file...");
+    return readFile<StreamType>(filename);
+  }
+
+  // We also search for the file in the top directory.
+  if (std::filesystem::exists("./../../" + filename)) {
+    Logger::debug("Opening a file in a top dir: {}", "./../../" + filename);
+    return readFile<StreamType>("./../../" + filename);
+  }
+  Logger::critical("Unable to open a file it does not exist...");
+  throw std::runtime_error("");
 };
 
 /**

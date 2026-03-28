@@ -4,20 +4,20 @@
 #include "src/OneWayStack.h"
 #include "src/StackBase.h"
 #include "src/StdStack.h"
-#include <cerrno>
 #include <concepts>
 #include <fstream>
 
 template <typename T, typename type>
 concept AnyStack = std::derived_from<T, StackBase<type>>;
 
-template <AnyStack<int> StackTypeToTest> void testStack() {
-  int i1 = 1;
-  int i2 = 2;
-  int i3 = 3;
-  auto stack = StackTypeToTest({i1, i2, i3});
-
+template <AnyStack<int> StackTypeToTest>
+void testStack(std::ifstream &testFile) {
   Logger::debug("Testing stack of type: {}", typeid(StackTypeToTest).name());
+  auto stack = StackTypeToTest({});
+  Logger::debug("Initialized the stack");
+  stack.load(testFile);
+  Logger::debug("Loaded from a file");
+
   Logger::debug("Stack is: {}", stack);
   Logger::debug("Stack is empty: {}", stack.isEmpty());
   Logger::debug("Number of elements: {}", stack.size());
@@ -30,10 +30,19 @@ template <AnyStack<int> StackTypeToTest> void testStack() {
 }
 
 int main() {
-  testStack<StdStack<int>>();
-  testStack<OneWayStack<int>>();
-  testStack<ArrayStack<int>>();
+
   std::ifstream file = promptOpenFile<std::ifstream>(
       "podaj nazwe pliku wejsciowego(testowego): ",
-      std::function<bool(std::string)> verifier) return 0;
+      [](std::string _) { return true; });
+
+  testStack<StdStack<int>>(file);
+  file.clear();
+  file.seekg(0, std::ios::beg);
+  testStack<OneWayStack<int>>(file);
+  file.clear();
+  file.seekg(0, std::ios::beg);
+  testStack<ArrayStack<int>>(file);
+  file.clear();
+  file.seekg(0, std::ios::beg);
+  return 0;
 }
