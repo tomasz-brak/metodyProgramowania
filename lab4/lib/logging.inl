@@ -7,6 +7,8 @@
 void inline vprintCompatible(std::string_view fmt, std::format_args args) {
 #if defined(_WIN32) || defined(_MSC_VER)
   // MSVC provides _buffered
+  // https://github.com/alf-p-steinbach/C---how-to---make-non-English-text-work-in-Windows/blob/main/how-to-use-utf8-in-windows.md
+  std::vprint_nonunicode_buffered(fmt, args);
 #else
   // GCC/Clang (libstdc++/libc++)
   std::vprint_nonunicode(fmt, args);
