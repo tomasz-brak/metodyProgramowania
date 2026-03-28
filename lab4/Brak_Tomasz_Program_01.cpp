@@ -1,9 +1,12 @@
+#include "Files.h"
 #include "logging.h"
 #include "src/ArrayStack.h"
 #include "src/OneWayStack.h"
 #include "src/StackBase.h"
 #include "src/StdStack.h"
+#include <cerrno>
 #include <concepts>
+#include <fstream>
 
 template <typename T, typename type>
 concept AnyStack = std::derived_from<T, StackBase<type>>;
@@ -30,5 +33,7 @@ int main() {
   testStack<StdStack<int>>();
   testStack<OneWayStack<int>>();
   testStack<ArrayStack<int>>();
-  return 0;
+  std::ifstream file = promptOpenFile<std::ifstream>(
+      "podaj nazwe pliku wejsciowego(testowego): ",
+      std::function<bool(std::string)> verifier) return 0;
 }

@@ -1,5 +1,7 @@
 #pragma once
+#include <cstdio>
 #include <format>
+#include <fstream>
 #include <stdexcept>
 
 template <typename T> struct stackItem {
@@ -29,6 +31,15 @@ public:
   virtual void put(T const &element) = 0;
   virtual T pop() = 0;
   virtual T &top() = 0;
+  inline void load(std::ifstream &input) {
+    int size;
+    input >> size;
+    for (int i = 0; i < size; i++) {
+      int element;
+      input >> element;
+      this->put(element);
+    }
+  }
 
   stackItem<T> *first = nullptr;
   stackItem<T> *last = nullptr;
