@@ -16,7 +16,6 @@ OneWayStack<T>::OneWayStack(std::initializer_list<T> initList) {
   for (const auto &item : initList) {
     put(item);
   }
-  Logger::debug("Finished inserting... last is ");
 }
 
 /**
