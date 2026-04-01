@@ -33,3 +33,14 @@ add_executable(MyProgram
 )
 
 target_include_directories(MyProgram PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
+
+add_executable(MyProgram2
+  Brak_Tomasz_Program_02.cpp
+  ${LIB_SOURCES}
+  ${LIB_HEADERS}
+  ${SRC_HEADERS}
+  ${SRC_SOURCES}
+)
+
+target_include_directories(MyProgram2 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib)

@@ -1,10 +1,11 @@
 #include "lib/Files.h"
 #include "lib/containers/list.h"
 #include "lib/logging.h"
+#include "src/DirectionalList.h"
 #include "src/graph.h"
 #include <fstream>
 #include <iostream>
-
+#include <list>
 int main() {
   Logger::info("Hello World!");
 
@@ -17,25 +18,9 @@ int main() {
   if (!inFile.is_open() || !outFile.is_open()) {
     return 1;
   }
-  outFile << "=== Using a c-style array === ";
-  Graph<List> graph;
+  outFile << "=== Using a std::list === ";
   int k, in, out;
-
-  if (!(inFile >> k))
-    return 0;
-
-  for (int i = 0; i < k; ++i) {
-    if (inFile >> in >> out) {
-      graph.addEdge(in, out);
-    }
-  }
-
-  graph.writeIncidenceMatrix(outFile);
-  graph.writeSuccessorList(outFile);
-  graph.writePredecessorList(outFile);
-
-  outFile << "=== Using a std::vector === ";
-  Graph<std::vector> graph2;
+  Graph<std::list> graph2;
   inFile.clear();
   inFile.seekg(0, std::ios::beg);
   if (!(inFile >> k))
@@ -47,9 +32,22 @@ int main() {
     }
   }
 
-  graph2.writeIncidenceMatrix(outFile);
-  graph2.writeSuccessorList(outFile);
-  graph2.writePredecessorList(outFile);
+  graph2.writeIncidenceList(outFile);
+
+  outFile << "=== Using a one way list === ";
+  Graph<DirectionalList> graph3;
+  inFile.clear();
+  inFile.seekg(0, std::ios::beg);
+  if (!(inFile >> k))
+    return 0;
+
+  for (int i = 0; i < k; ++i) {
+    if (inFile >> in >> out) {
+      graph3.addEdge(in, out);
+    }
+  }
+
+  graph3.writeIncidenceList(outFile);
 
   outFile.close();
   inFile.close();
