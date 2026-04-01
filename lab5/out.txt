@@ -1,0 +1,17 @@
+Macierz incydencji:
+0 0 -1 -1 0 0 1 
+0 0 0 0 -1 1 -1 
+-1 1 0 0 0 -1 0 
+0 -1 1 0 1 0 0 
+1 0 0 1 0 0 0 
+Correct way neighbour list:
+V5: 14
+V4: 3
+V3: 21
+V2: 4
+V1: 2
+Incorrect way neighbour list:
+V3: 3
+V1: 11
+V4: 44
+V2: 22
