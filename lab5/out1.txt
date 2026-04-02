@@ -1,0 +1,36 @@
+=== Using a c-style array === Incidence Matrix:
+0 1 1 0 0 0 -1 
+0 0 0 1 -1 -1 1 
+-1 0 0 0 0 1 0 
+0 0 -1 0 1 0 0 
+1 -1 0 -1 0 0 0 
+Successor list:
+V5: 1 
+V4: 3 
+V3: 2 1 
+V2: 4 5 
+V1: 2 
+Incorrect way neighbour list:
+V3: 4 
+V1: 3 5 
+V5: 2 
+V4: 2 
+V2: 1 3 
+=== Using a std::vector === Incidence Matrix:
+0 1 1 0 0 0 -1 
+0 0 0 1 -1 -1 1 
+-1 0 0 0 0 1 0 
+0 0 -1 0 1 0 0 
+1 -1 0 -1 0 0 0 
+Successor list:
+V5: 1 
+V4: 3 
+V3: 2 1 
+V2: 4 5 
+V1: 2 
+Incorrect way neighbour list:
+V3: 4 
+V1: 3 5 
+V5: 2 
+V4: 2 
+V2: 1 3 
