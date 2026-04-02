@@ -1,25 +1,14 @@
 #pragma once
-
-#include "container.h"
-
-template <typename T, int s> class Array : public Container<T> {
+template <typename T, int s> class Array {
 public:
   T data[s];
-  int size_ = 0;
+  int size = s;
 
-  T &operator[](int i) override { return data[i]; }
-  const T &operator[](int i) const override { return data[i]; }
+  T &operator[](int i) { return data[i]; }
 
-  T *begin() override { return data; }
-  T *end() override { return data + size_; }
+  const T &operator[](int i) const { return data[i]; }
 
-  int size() const override { return size_; }
+  T *begin() { return data; }
 
-  bool append(const T &value) override {
-    if (size_ >= s) {
-      return false;
-    }
-    data[size_++] = value;
-    return true;
-  }
+  T *end() { return data + size; }
 };
