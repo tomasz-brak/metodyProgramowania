@@ -26,12 +26,17 @@ StreamType promptOpenFile(std::string fileDesc,
   std::getline(std::cin, filename);
   if (filename == "") {
     Logger::debug("Opening default path as it was not specified");
-    return readFile<StreamType>(skipPath);
+    filename = skipPath;
   }
   if (!verifier(filename)) {
     throw std::runtime_error(std::format(
         "Couldn't open a file due to an error in the file name. Filename {}",
         filename));
+  }
+  // We also search for the file in the top directory.
+  if (std::filesystem::exists("./../../" + filename)) {
+    Logger::debug("Opening a file in a top dir: {}", "./../../" + filename);
+    return readFile<StreamType>("./../../" + filename);
   }
   // If a filename exists in the script dir we open that
   if (std::filesystem::exists(filename)) {
@@ -39,11 +44,6 @@ StreamType promptOpenFile(std::string fileDesc,
     return readFile<StreamType>(filename);
   }
 
-  // We also search for the file in the top directory.
-  if (std::filesystem::exists("./../../" + filename)) {
-    Logger::debug("Opening a file in a top dir: {}", "./../../" + filename);
-    return readFile<StreamType>("./../../" + filename);
-  }
   Logger::critical("Unable to open a file it does not exist...");
   throw std::runtime_error("");
 };
