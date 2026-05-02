@@ -143,6 +143,7 @@ jobs:
           path: ${{ matrix.lab.name }}/build
           key: ${{ matrix.lab.cache_key }}
           fail-on-cache-miss: true
+          enableCrossOsArchive: true
 
       - name: Package artifacts (Linux)
         run: |
