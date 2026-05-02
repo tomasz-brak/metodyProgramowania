@@ -1,14 +1,12 @@
 #include "logging.h"
 #include "src/random.h"
-#include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
 
 int main() {
   int method;
 
-  Logger::debug("wybierz algorytm generujacy: (1) lub (2)");
+  Logger::debug("wybierz algorytm generujacy: (1 lcg) lub (2 acg)");
   if (!(std::cin >> method) || (method != 1 && method != 2)) {
     Logger::critical("Nieprawidlowy wybor algorytmu generujcego!");
     return 1;
