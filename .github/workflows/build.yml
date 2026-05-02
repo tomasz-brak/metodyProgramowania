@@ -52,10 +52,10 @@ jobs:
             
             if [ "$count" -gt 0 ]; then
               echo "✅ Cache found for $lab - assigning to Linux packaging job."
-              cached_labs=$(echo "$cached_labs" | jq ". + [$item]")
+              cached_labs=$(echo "$cached_labs" | jq -c ". + [$item]")
             else
               echo "❌ No cache for $lab - assigning to Windows build job."
-              build_labs=$(echo "$build_labs" | jq ". + [$item]")
+              build_labs=$(echo "$build_labs" | jq -c ". + [$item]")
             fi
           done
           
