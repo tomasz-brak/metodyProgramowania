@@ -8,7 +8,7 @@ int main() {
 
   Logger::debug("wybierz algorytm generujacy: (1 lcg) lub (2 acg)");
   if (!(std::cin >> method) || (method != 1 && method != 2)) {
-    Logger::critical("Nieprawidlowy wybor algorytmu generujcego!");
+    Logger::critical("Nieprawidlowy wybor algorytmu generujcego");
     return 1;
   }
 

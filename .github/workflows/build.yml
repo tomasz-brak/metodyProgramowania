@@ -16,25 +16,58 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Find root directories starting with "lab"
+      - name: Find labs and compute hashes
         id: set
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          labs_json="$(find . -maxdepth 1 -mindepth 1 -type d -name 'lab*' -printf '%f\n' \
-            | sort \
-            | jq -R -s -c 'split("\n") | map(select(length>0))')"
-
-          if [ -z "$labs_json" ] || [ "$labs_json" = "[]" ]; then
-            echo "No lab* directories found in repo root."
-            labs_json="[]"
-          fi
-
+          
+          labs_json="["
+          first=true
+          
+          # Find directories starting with lab
+          for lab in lab*; do
+            [ -d "$lab" ] || continue
+            
+            # Compute a stable hash of the directory contents (Linux equivalent to the PS script)
+            hash=$(find "$lab" -type f \
+              -not -path "*/.git/*" \
+              -not -path "*/out/*" \
+              -not -path "*/build/*" \
+              -not -path "*/docs/html/*" \
+              -not -path "*/docs/latex/*" \
+              -not -name "compile_commands.json" \
+              -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+              
+            cache_key="windows-msvc-cmake-$lab-$hash"
+            
+            # Check if this exact cache key already exists using the GitHub API
+            count=$(gh api -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "/repos/${{ github.repository }}/actions/caches?key=$cache_key" --jq '.total_count')
+            
+            if [ "$count" -gt 0 ]; then
+              echo "✅ Cache found for $lab ($cache_key) - skipping VM allocation."
+            else
+              echo "❌ No cache for $lab ($cache_key) - scheduling build."
+              item="{\"name\": \"$lab\", \"hash\": \"$hash\"}"
+              if [ "$first" = true ]; then
+                labs_json="$labs_json$item"
+                first=false
+              else
+                labs_json="$labs_json, $item"
+              fi
+            fi
+          done
+          labs_json="$labs_json]"
+          
           echo "labs=$labs_json" >> "$GITHUB_OUTPUT"
-          echo "Discovered: $labs_json"
+          echo "Labs to build: $labs_json"
 
   build:
-    name: Build ${{ matrix.lab }} (MSVC)
+    name: Build ${{ matrix.lab.name }} (MSVC)
     needs: discover
     if: ${{ needs.discover.outputs.labs != '[]' }}
     runs-on: windows-latest
@@ -52,79 +85,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Cache per-lab + source hash. If unchanged, configure/build dirs are restored and build can be skipped/reused.
-      - name: Compute lab source hash
-        id: hash
-        run: |
-          $lab = "${{ matrix.lab }}"
-          if (-not (Test-Path $lab)) {
-            throw "Directory '$lab' not found."
-          }
-
-          # Hash all files except common transient/generated dirs/files.
-          $files = Get-ChildItem -Path $lab -Recurse -File -Force |
-            Where-Object {
-              $_.FullName -notmatch '\\\.git\\' -and
-              $_.FullName -notmatch '\\out\\' -and
-              $_.FullName -notmatch '\\build\\' -and
-              $_.FullName -notmatch '\\docs\\html\\' -and
-              $_.FullName -notmatch '\\docs\\latex\\' -and
-              $_.Name -ne 'compile_commands.json'
-            } |
-            Sort-Object FullName
-
-          $sha = [System.Security.Cryptography.SHA256]::Create()
-          foreach ($f in $files) {
-            $rel = $f.FullName.Substring($PWD.Path.Length).TrimStart('\')
-            $relBytes = [System.Text.Encoding]::UTF8.GetBytes($rel)
-            $sha.TransformBlock($relBytes, 0, $relBytes.Length, $relBytes, 0) | Out-Null
-
-            $bytes = [System.IO.File]::ReadAllBytes($f.FullName)
-            $sha.TransformBlock($bytes, 0, $bytes.Length, $bytes, 0) | Out-Null
-          }
-          $sha.TransformFinalBlock([byte[]]::new(0), 0, 0) | Out-Null
-          $hash = -join ($sha.Hash | ForEach-Object { $_.ToString("x2") })
-
-          "hash=$hash" >> $env:GITHUB_OUTPUT
-          Write-Host ("Hash for {0}: {1}" -f $lab, $hash)
-
-      - name: Restore CMake build cache
+      - name: Cache CMake build
         id: cache
         uses: actions/cache@v4
         with:
-          path: |
-            ${{ matrix.lab }}/build
-          key: windows-msvc-cmake-${{ matrix.lab }}-${{ steps.hash.outputs.hash }}
+          path: ${{ matrix.lab.name }}/build
+          # Reuse the hash we already calculated in the discover phase
+          key: windows-msvc-cmake-${{ matrix.lab.name }}-${{ matrix.lab.hash }}
 
       - name: Configure (CMake, Visual Studio 2022)
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          $lab = "${{ matrix.lab }}"
+          $lab = "${{ matrix.lab.name }}"
           if (-not (Test-Path (Join-Path $lab "CMakeLists.txt"))) {
             throw "Missing CMakeLists.txt in $lab"
           }
-
           cmake -S $lab -B "$lab/build" -G "Visual Studio 17 2022" -A x64
 
       - name: Build (Release)
-        if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          $lab = "${{ matrix.lab }}"
+          $lab = "${{ matrix.lab.name }}"
           cmake --build "$lab/build" --config Release --parallel
 
-      - name: Verify cached build artifacts exist (cache hit path)
-        if: steps.cache.outputs.cache-hit == 'true'
-        run: |
-          $lab = "${{ matrix.lab }}"
-          if (-not (Test-Path "$lab/build")) {
-            throw "Cache hit claimed, but $lab/build is missing."
-          }
-          Write-Host "Reused cached build for $lab"
-
-      - name: Package artifacts for ${{ matrix.lab }}
+      - name: Package artifacts for ${{ matrix.lab.name }}
         if: always()
         run: |
-          $lab = "${{ matrix.lab }}"
+          $lab = "${{ matrix.lab.name }}"
           $staging = Join-Path $env:RUNNER_TEMP "$lab-artifact"
           if (Test-Path $staging) { Remove-Item -Recurse -Force $staging }
           New-Item -ItemType Directory -Path $staging | Out-Null
@@ -148,7 +133,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.lab }}-windows-msvc
+          name: ${{ matrix.lab.name }}-windows-msvc
           path: ${{ env.ZIP_PATH }}
           if-no-files-found: warn
           retention-days: 14
@@ -161,9 +146,8 @@ jobs:
     steps:
       - name: Fail if any lab build failed
         run: |
-          # build job is a matrix; overall result becomes failure if any matrix entry failed.
-          if [ "${{ needs.build.result }}" != "success" ]; then
+          if [ "${{ needs.build.result }}" == "failure" ] || [ "${{ needs.build.result }}" == "cancelled" ]; then
             echo "At least one lab failed to compile."
             exit 1
           fi
-          echo "All labs compiled successfully."
+          echo "All builds succeeded or were cached."
