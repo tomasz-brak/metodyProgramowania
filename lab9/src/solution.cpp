@@ -11,6 +11,20 @@ void Solution::load_file(const std::string &filepath) {
   file.close();
 }
 
+/**
+ * @brief Calculates the *upper potential profit* for a node.
+ *
+ * Calculates heuristicly the best-case profit scenario the branch from \p node.
+ * Adding all remaining items possible to fill the backpack. If item would not
+ * fit it adds a fraction of it.
+ *
+ * @note Value is only calculated for tree prunning purposes. If bound(node) <
+ * current `max_profit` the node is deemed inefficient and pruned.
+ *
+ * @param node Node to be evaluated.
+ * @param backpack Backpack config and its content.
+ * @return maximum theoretical profit for the \p node branch.
+ */
 float bound(rc<Node> node, const rc<Backpack> backpack) {
   if (node->weight > backpack->capacity)
     return 0;
@@ -38,6 +52,16 @@ float bound(rc<Node> node, const rc<Backpack> backpack) {
   return profit_bound;
 }
 
+/**
+ * @brief Uses a greedy approach to quickly calculate a baseline profit.
+ *
+ * Iterates through items and takes them until capacity is reached.
+ *
+ * This allows for pruning inefficient branches right from the beginning.
+ *
+ * @param backpack Backpack with **presorted items**
+ * @return a profit achieved by the greedy alghorithm.
+ */
 int getGreedyBaseline(const rc<Backpack> &backpack) {
   int current_weight = 0;
   int current_profit = 0;
@@ -50,6 +74,20 @@ int getGreedyBaseline(const rc<Backpack> &backpack) {
   return current_profit;
 }
 
+/**
+ * @brief Generates a decision tree
+ *
+ * Processes items, for each it creates a decision node either
+ *  TAKES:
+ *    - item added, weight + profit increases.
+ *  LEAVES:
+ *    - item left behind, profit + weight from the parent.
+ *
+ * After creation for each node an evaluation happens and for each node whose
+ * bound is vaiable (being grater then maxProfit) is left for the next tree
+ * level to process. If node is not viable it is PRUNED and removed from the
+ * tree.
+ */
 void Solution::createTree() {
   this->root = std::make_shared<Node>();
   this->root->weight = 0;
@@ -146,6 +184,16 @@ void Solution::createTree() {
   Logger::debug("Tree Creation Finished");
 }
 
+/**
+ * @brief Finds the best solution out of the tree
+ * Starting at ROOT it goes down each possible path, if it encounters a node
+ * with both TAKES and LEAVES pointers = nullptr it compares it to max profit.
+ *
+ * If it is bigger then maxProfit it is a current best leaf.
+ * @param node the node being inspected
+ * @param maxProfit current best profit
+ * @param bestLeaf current best candidate
+ */
 void harvestBestLeaf(rc<Node> node, int &maxProfit, rc<Node> &bestLeaf) {
   if (node == nullptr)
     return;
@@ -173,6 +221,19 @@ void harvestBestLeaf(rc<Node> node, int &maxProfit, rc<Node> &bestLeaf) {
   harvestBestLeaf(node->leaves, maxProfit, bestLeaf);
 }
 
+/**
+ * @brief Prepairs the solution for the problem.
+ *
+ * Ensures the data in the backpack is sorted corretly then assembles the
+ * solution tree.
+ * After the solution tree is established it performs DFS to find the best
+ * possible combination of nodes
+ *
+ * **Backtracking** - after finding an optimal solution the algorithm backtracks
+ * using the weak_ptr parent pointer to establish a result vector
+ *
+ * @return result vector containing nodes yielding an optimal solution
+ */
 vec<Node> Solution::solve() {
   std::sort(backpack->items.begin(), backpack->items.end(),
             [](const Backpack::Item &item1, const Backpack::Item &item2) {
