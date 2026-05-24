@@ -1,10 +1,235 @@
 #include "solution.h"
+#include "../lib/logging.h"
 #include "backpack.h"
+#include <algorithm>
 #include <fstream>
 #include <memory>
 #include <string>
 void Solution::load_file(const std::string &filepath) {
   std::ifstream file(filepath);
-  this->backpack = std::make_unique<Backpack>(file);
+  this->backpack = std::make_shared<Backpack>(file);
   file.close();
+}
+
+float bound(rc<Node> node, const rc<Backpack> backpack) {
+  // Jeśli waga tego węzła już przekracza pojemność, ta gałąź jest całkowicie
+  // nieważna
+  if (node->weight > backpack->capacity)
+    return 0;
+
+  float profit_bound = node->profit;
+  int toweight = node->weight;
+
+  // Wskaźnik i to głębokość (depth) naszego obecnego węzła.
+  // Następne przedmioty, które sprawdzamy, zaczynają się od i + 1.
+  size_t j = node->depth;
+  size_t num_items = backpack->items.size();
+  int W = backpack->capacity;
+
+  // 1. Dodawaj całe przedmioty (od j aż do k-1)
+  while (j < num_items && toweight + backpack->items[j].mass <= W) {
+    toweight += backpack->items[j].mass;
+    profit_bound += backpack->items[j].price;
+    j++;
+  }
+
+  // 2. Jeśli zostały jeszcze przedmioty, j jest teraz naszym k-tym przedmiotem.
+  // Bierzemy jego ułamkową część, aby idealnie dobić do pojemności W.
+  if (j < num_items) {
+    float remaining_capacity = W - toweight;
+    float price_per_unit =
+        (float)backpack->items[j].price / backpack->items[j].mass;
+    profit_bound += remaining_capacity * price_per_unit;
+  }
+
+  return profit_bound;
+}
+
+int getGreedyBaseline(const rc<Backpack> &backpack) {
+  int current_weight = 0;
+  int current_profit = 0;
+  for (const auto &item : backpack->items) {
+    if (current_weight + item.mass <= backpack->capacity) {
+      current_weight += item.mass;
+      current_profit += item.price;
+    }
+  }
+  return current_profit;
+}
+
+void Solution::createTree() {
+  this->root = std::make_shared<Node>();
+  this->root->weight = 0;
+  this->root->profit = 0;
+  this->root->depth = 0;
+  this->root->item_id = "Root";
+  this->root->bound = bound(this->root, backpack);
+
+  vec<rc<Node>> nextLevel;
+  vec<rc<Node>> level = {this->root};
+
+  int maxProfit = getGreedyBaseline(this->backpack);
+  int depth = 0;
+
+  Logger::debug("Started tree creation...");
+  Logger::debug("capacity: {} max_profit: {}", backpack->capacity, maxProfit);
+
+  for (Backpack::Item item : this->backpack->items) {
+    nextLevel.clear();
+    Logger::debug("[depth: {}] Item: {} (Price: {}, Mass: {})", depth,
+                  item.name, item.price, item.mass);
+    Logger::debug("Current level active nodes count: {}", level.size());
+
+    for (auto parentNode : level) {
+      parentNode->takes = nullptr;
+      parentNode->leaves = nullptr;
+
+      parentNode->takes = std::make_shared<Node>();
+      parentNode->takes->parent = parentNode;
+      parentNode->takes->item_id = item.name;
+      parentNode->takes->profit = parentNode->profit + item.price;
+      parentNode->takes->weight = parentNode->weight + item.mass;
+      parentNode->takes->depth = depth + 1;
+      parentNode->takes->bound = bound(parentNode->takes, backpack);
+
+      Logger::debug("  -> [TAKE] Node '{}': Weight={}/{}, Profit={}, Bound={}",
+                    parentNode->takes->item_id, parentNode->takes->weight,
+                    backpack->capacity, parentNode->takes->profit,
+                    parentNode->takes->bound);
+
+      if (parentNode->takes->weight <= backpack->capacity &&
+          parentNode->takes->profit > maxProfit) {
+        int oldProfit = maxProfit;
+        maxProfit = parentNode->takes->profit;
+        Logger::debug("     maxProfit changed: {} -> {}", oldProfit, maxProfit);
+      }
+
+      parentNode->leaves = std::make_shared<Node>();
+      parentNode->leaves->parent = parentNode;
+      parentNode->leaves->item_id = "Left " + item.name;
+      parentNode->leaves->profit = parentNode->profit;
+      parentNode->leaves->weight = parentNode->weight;
+      parentNode->leaves->depth = depth + 1;
+      parentNode->leaves->bound = bound(parentNode->leaves, backpack);
+
+      Logger::debug("  -> [LEAVE] Node '{}': Weight={}/{}, Profit={}, Bound={}",
+                    parentNode->leaves->item_id, parentNode->leaves->weight,
+                    backpack->capacity, parentNode->leaves->profit,
+                    parentNode->leaves->bound);
+
+      if (parentNode->leaves->weight <= backpack->capacity &&
+          parentNode->leaves->profit > maxProfit) {
+        int oldProfit = maxProfit;
+        maxProfit = parentNode->leaves->profit;
+        Logger::debug("     maxProfit changed: {} -> {} **", oldProfit,
+                      maxProfit);
+      }
+
+      if (parentNode->takes->weight <= backpack->capacity &&
+          parentNode->takes->bound >= maxProfit) {
+        nextLevel.push_back(parentNode->takes);
+      } else {
+        Logger::debug("     PRUNED TAKE node '{}'", parentNode->takes->item_id);
+        parentNode->takes = nullptr;
+      }
+
+      if (parentNode->leaves->weight <= backpack->capacity &&
+          parentNode->leaves->bound >= maxProfit) {
+        nextLevel.push_back(parentNode->leaves);
+      } else {
+        Logger::debug("     PRUNED LEAVE node '{}'",
+                      parentNode->leaves->item_id);
+        parentNode->leaves = nullptr;
+      }
+    }
+
+    if (nextLevel.empty()) {
+      Logger::debug("Next level empty, finished");
+      break;
+    }
+    level = nextLevel;
+    depth++;
+  }
+  Logger::debug("Tree Creation Finished");
+}
+
+void harvestBestLeaf(rc<Node> node, int &maxProfit, rc<Node> &bestLeaf) {
+  if (node == nullptr)
+    return;
+
+  Logger::debug("[Harvest] Inspecting Node: '{}', Profit: {}, Weight: {}, "
+                "Takes: {}, Leaves: {}",
+                node->item_id, node->profit, node->weight,
+                node->takes ? "Valid" : "Null",
+                node->leaves ? "Valid" : "Null");
+
+  if (node->takes == nullptr && node->leaves == nullptr) {
+    Logger::debug(
+        "  Found structural leaf node '{}'. Profit: {}, Current maxProfit: {}",
+        node->item_id, node->profit, maxProfit);
+    if (node->profit >= maxProfit) {
+      maxProfit = node->profit;
+      bestLeaf = node;
+      Logger::debug("  >> New bestLeaf assigned: '{}' with Profit {} <<",
+                    node->item_id, maxProfit);
+    }
+    return;
+  }
+
+  harvestBestLeaf(node->takes, maxProfit, bestLeaf);
+  harvestBestLeaf(node->leaves, maxProfit, bestLeaf);
+}
+
+vec<Node> Solution::solve() {
+  // 1. Sort elements descending by density ratio
+  std::sort(backpack->items.begin(), backpack->items.end(),
+            [](const Backpack::Item &item1, const Backpack::Item &item2) {
+              float ratio1 = (float)item1.price / item1.mass;
+              float ratio2 = (float)item2.price / item2.mass;
+              return ratio1 > ratio2;
+            });
+
+  // 2. Build your tree layer-by-layer
+  createTree();
+
+  // 3. Find structural trace path
+  int maxProfit = 0;
+  rc<Node> bestLeaf = nullptr;
+
+  Logger::debug("--- Starting Harvest Step ---");
+  harvestBestLeaf(this->root, maxProfit, bestLeaf);
+  Logger::debug("--- Harvest Step Complete ---");
+
+  if (bestLeaf != nullptr) {
+    Logger::debug("Winning leaf path traces down to Node ID: '{}' with final "
+                  "total profit: {} and total weight: {}",
+                  bestLeaf->item_id, bestLeaf->profit, bestLeaf->weight);
+  } else {
+    Logger::debug("CRITICAL ERROR: No valid bestLeaf found!");
+  }
+
+  // 4. Trace parents upward to reconstruct item inclusion array
+  vec<Node> chosenItems;
+  auto current = bestLeaf;
+
+  while (current != nullptr) {
+    auto parentOpt = current->parent.lock();
+    if (parentOpt != nullptr) {
+      if (current->profit > parentOpt->profit) {
+        Node individualNode = *current;
+        individualNode.profit = current->profit - parentOpt->profit;
+        individualNode.weight = current->weight - parentOpt->weight;
+
+        Logger::debug("[Backtrack] Captured item taken: {} (Item weight: {}, "
+                      "Item profit: {})",
+                      current->item_id, individualNode.weight,
+                      individualNode.profit);
+        chosenItems.push_back(individualNode);
+      }
+    }
+    current = parentOpt;
+  }
+
+  std::reverse(chosenItems.begin(), chosenItems.end());
+  return chosenItems;
 }

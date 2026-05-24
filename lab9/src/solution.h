@@ -6,18 +6,27 @@
 
 template <class T> using vec = std::vector<T>;
 template <class T> using box = std::unique_ptr<T>;
-
+template <class T> using rc = std::shared_ptr<T>;
 class Node {
 public:
-  int item_id = 0;
-  int price = 0;
+  std::weak_ptr<Node> parent;
+
+  int depth = 0;
+  std::string item_id;
+  int profit = 0;
   int weight = 0;
-  float pw_ratio = 0.0;
+  float bound = 0.0;
+  rc<Node> takes;
+  rc<Node> leaves;
 };
 
 class Solution {
+private:
+  void createTree();
+  rc<Node> root;
+
 public:
-  box<Backpack> backpack = std::make_unique<Backpack>();
+  rc<Backpack> backpack = std::make_unique<Backpack>();
   vec<Node> solve();
   void load_file(const std::string &filepath);
 };
