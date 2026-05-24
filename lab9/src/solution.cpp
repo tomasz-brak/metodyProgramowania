@@ -12,29 +12,22 @@ void Solution::load_file(const std::string &filepath) {
 }
 
 float bound(rc<Node> node, const rc<Backpack> backpack) {
-  // Jeśli waga tego węzła już przekracza pojemność, ta gałąź jest całkowicie
-  // nieważna
   if (node->weight > backpack->capacity)
     return 0;
 
   float profit_bound = node->profit;
   int toweight = node->weight;
 
-  // Wskaźnik i to głębokość (depth) naszego obecnego węzła.
-  // Następne przedmioty, które sprawdzamy, zaczynają się od i + 1.
   size_t j = node->depth;
   size_t num_items = backpack->items.size();
   int W = backpack->capacity;
 
-  // 1. Dodawaj całe przedmioty (od j aż do k-1)
   while (j < num_items && toweight + backpack->items[j].mass <= W) {
     toweight += backpack->items[j].mass;
     profit_bound += backpack->items[j].price;
     j++;
   }
 
-  // 2. Jeśli zostały jeszcze przedmioty, j jest teraz naszym k-tym przedmiotem.
-  // Bierzemy jego ułamkową część, aby idealnie dobić do pojemności W.
   if (j < num_items) {
     float remaining_capacity = W - toweight;
     float price_per_unit =
@@ -181,7 +174,6 @@ void harvestBestLeaf(rc<Node> node, int &maxProfit, rc<Node> &bestLeaf) {
 }
 
 vec<Node> Solution::solve() {
-  // 1. Sort elements descending by density ratio
   std::sort(backpack->items.begin(), backpack->items.end(),
             [](const Backpack::Item &item1, const Backpack::Item &item2) {
               float ratio1 = (float)item1.price / item1.mass;
@@ -189,10 +181,8 @@ vec<Node> Solution::solve() {
               return ratio1 > ratio2;
             });
 
-  // 2. Build your tree layer-by-layer
   createTree();
 
-  // 3. Find structural trace path
   int maxProfit = 0;
   rc<Node> bestLeaf = nullptr;
 
@@ -208,7 +198,6 @@ vec<Node> Solution::solve() {
     Logger::debug("CRITICAL ERROR: No valid bestLeaf found!");
   }
 
-  // 4. Trace parents upward to reconstruct item inclusion array
   vec<Node> chosenItems;
   auto current = bestLeaf;
 
