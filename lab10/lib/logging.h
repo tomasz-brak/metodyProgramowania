@@ -5,7 +5,11 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
-
+class CriticalMessageNotHandled : public std::runtime_error {
+public:
+  explicit CriticalMessageNotHandled()
+      : std::runtime_error("Critical error message went unhandled!") {}
+};
 class Logger {
 public:
   enum Level { Debug, Info, Warn, Error, Critical };
@@ -58,7 +62,7 @@ public:
   template <typename... Args>
   static inline void critical(std::string fmt, Args &&...args) {
     log(Level::Critical, fmt, std::forward<Args>(args)...);
-    throw std::runtime_error("Critical message not handled");
+    throw CriticalMessageNotHandled();
   }
 };
 
