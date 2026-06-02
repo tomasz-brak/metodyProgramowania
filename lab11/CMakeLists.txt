@@ -33,7 +33,7 @@ add_executable(MyProgram
 )
 
 add_executable(MyProgram2
-  zadSort.cpp
+  koloAproksy.cpp
   ${LIB_SOURCES}
   ${LIB_HEADERS}
   ${SRC_HEADERS}
