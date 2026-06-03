@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstddef>
 #include <deque>
 #include <memory>
@@ -64,6 +65,13 @@ void cTablica::sortlomuto() {
     if (index + 1 < high) {
       q.push_back(std::make_pair(index + 1, high));
     }
+  }
+}
+
+void cTablica::sortkopcowanie() {
+  auto split = data.size() - 1;
+  std::swap(*std::max_element(data.begin(), data.end()), *(data.end() - 1));
+  for (auto &element : data | std::views::take(split)) {
   }
 }
 
