@@ -2,6 +2,16 @@
 #include <deque>
 #include <print>
 
+/**
+ * @brief Sorts the internal collection using the Bubble sort alghorithm
+ *
+ * Structure:
+ * While the elements are not sorted iterates through the array, swapping
+ * elements if one is found to be higher then other.
+ * If no swaps occured we know the collection is in order.
+ *
+ * @param test Test result object
+ */
 void cTablica::sortbobel(testResult &test) {
   if (data.size() < 2) {
     return;
@@ -20,6 +30,31 @@ void cTablica::sortbobel(testResult &test) {
   }
 }
 
+/**
+ * @brief Partitions a subarray around a pivot using the Lomuto's scheme.
+ *
+ * Last element of the range is selected as a pivot.
+ * We try to arrage the array in a way that the pivot sits in the middle,
+ * splitting lowest largest values.
+ *
+ * @details
+ * Algorithms chooses a pivot candidate (last element). Then iterates through
+ * the subarray. Declare 2 pointers fast (j ++ every execution of the loop) slow
+ * (i before i all elements are <= pivot; i=low-1)
+ *
+ * Iterate through the subarray, if an element j is lower then the pivot,
+ * i+1-th(being the element after i means its larger) and j-th element get
+ * swaped.
+ *
+ * After swapping through all of the array we place the pivot in the i+1
+ * location
+ *
+ * @param low Lower bound
+ * @param high Higer bound
+ * @param tab table reference
+ * @param test test result agragator
+ * @return location of the pivot
+ */
 int partitionLomuto(size_t low, size_t high, cTablica &tab, testResult &test) {
   int pivot = tab.data[high];
   int i = low - 1;
@@ -37,6 +72,17 @@ int partitionLomuto(size_t low, size_t high, cTablica &tab, testResult &test) {
   return i + 1;
 }
 
+/**
+ * @brief Sorts the array using QuickSort(Lomuto as the partition function)
+ *
+ * By continuosly partitioning the array around pivots arranges smaller and
+ * smaller arrays in order
+ *
+ * If segments cointain more then one element the are added to the queue to
+ * process again.
+ *
+ * @param test test result agragator
+ */
 void cTablica::sortlomuto(testResult &test) {
   if (this->data.size() < 2) {
     return;
@@ -44,6 +90,7 @@ void cTablica::sortlomuto(testResult &test) {
   int low = 0;
   int high = this->data.size() - 1;
 
+  // holds left and right bounds
   std::deque<std::pair<int, int>> q;
   q.push_back(std::make_pair(low, high));
   while (q.size() > 0) {
@@ -61,6 +108,22 @@ void cTablica::sortlomuto(testResult &test) {
   }
 }
 
+/**
+ * @brief Sorts the internal collection using QuickSort(with hoare's comparision
+ * function)
+ *
+ * Select a pivot = half of the array and init pointers to front and back of the
+ * array. Move i and j unitil they find repectivly: element >= pivot and element
+ * <= pivot. Swap the values.
+ *
+ * Repeat until i and j cross each other
+ *
+ * Partition index is j is returned.
+ *
+ * Use a stack to itrativly QuickSort.
+ *
+ * @param test test result agragator
+ */
 void cTablica::sorthoare(testResult &test) {
   std::vector<std::pair<int, int>> stos;
 
@@ -111,32 +174,60 @@ struct children {
   int *right;
 };
 
+/**
+ * @brief Sorts the underlying collection using Heap sort
+ *
+ * Creates a heap inside the data vector.
+ * Heap loop arrages items in the vector to follow heap rule (parent is always >
+ * then child).
+ * @details
+ * Process each parent of an element in a tree bottom up (i = n/2 -1)
+ * max(parent, LChild, RChild) becomes the parent (whichever values was chosen
+ * gets replaced by the parent too[swap])
+ *
+ * *Heap sort*
+ * Largest element is first move it to the back of the vector
+ * Find largest among the children and move them to the front
+ * repeat until all elements are moved to the sorted area
+ *
+ * @param test test result agragator
+ */
 void cTablica::sortkopcowanie(testResult &test) {
   if (this->data.size() < 2) {
     return;
   }
 
-  int bound = 1;
+  int n = this->data.size();
 
-  auto parent = [](int i) {
-    if (i == 0)
-      return -1;
-    return (i - 1) / 2;
-  };
+  for (int i = (n / 2) - 1; i >= 0; --i) {
+    int current = i;
 
-  while (bound < data.size()) {
-    int currentIdx = bound;
-    bound++;
-
-    while (currentIdx > 0) {
-      int parentIdx = parent(currentIdx);
+    while (true) {
+      int left = 2 * current + 1;
+      int right = 2 * current + 2;
+      int largest = current;
 
       test.comparisions++;
-      if (this->data[currentIdx] > this->data[parentIdx]) {
-        std::swap(this->data[currentIdx], this->data[parentIdx]);
-        test.swaps++;
+      if (left < n) {
+        test.comparisions++;
+        if (this->data[left] > this->data[largest]) {
+          largest = left;
+        }
+      }
 
-        currentIdx = parentIdx;
+      test.comparisions++;
+      if (right < n) {
+        test.comparisions++;
+        if (this->data[right] > this->data[largest]) {
+          largest = right;
+        }
+      }
+
+      test.comparisions++;
+      if (largest != current) {
+        std::swap(this->data[current], this->data[largest]);
+        test.swaps++;
+        current = largest;
       } else {
         break;
       }
@@ -145,36 +236,26 @@ void cTablica::sortkopcowanie(testResult &test) {
   int heapSize = this->data.size();
 
   while (heapSize > 1) {
-    std::swap(this->data[0], this->data[heapSize - 1]);
+    std::swap(this->data[0], this->data[--heapSize]);
     test.swaps++;
 
-    heapSize--;
-
-    int currentIdx = 0;
+    int curr = 0;
     while (true) {
-      int leftChild = 2 * currentIdx + 1;
-      int rightChild = 2 * currentIdx + 2;
-      int largestIdx = currentIdx;
+      int left = 2 * curr + 1;
+      int right = 2 * curr + 2;
+      int largest = curr;
 
-      test.comparisions++;
-      if (leftChild < heapSize) {
-        if (this->data[leftChild] > this->data[largestIdx]) {
-          largestIdx = leftChild;
-        }
-      }
+      if (left < heapSize && data[left] > data[largest])
+        largest = left;
+      if (right < heapSize && data[right] > data[largest])
+        largest = right;
 
-      test.comparisions++;
-      if (rightChild < heapSize) {
-        if (this->data[rightChild] > this->data[largestIdx]) {
-          largestIdx = rightChild;
-        }
-      }
+      test.comparisions += 2;
 
-      test.comparisions++;
-      if (largestIdx != currentIdx) {
-        std::swap(this->data[currentIdx], this->data[largestIdx]);
+      if (largest != curr) {
+        std::swap(this->data[curr], this->data[largest]);
         test.swaps++;
-        currentIdx = largestIdx;
+        curr = largest;
       } else {
         break;
       }
@@ -182,6 +263,12 @@ void cTablica::sortkopcowanie(testResult &test) {
   }
 }
 
+/**
+ * @brief Sort all elements using bi-directional bubble sort
+ * Sort using normal bubble logic swapping if next > current, then reverse after
+ * hitting the end if next < current swap.
+ * @param test test result agragator
+ */
 void cTablica::sortwach(testResult &test) {
   if (data.size() < 2)
     return;
@@ -221,6 +308,13 @@ void cTablica::sortwach(testResult &test) {
     start++;
   }
 }
+/**
+ * @brief Generic sorter test function
+ *
+ * @param sorter Function member of the \t cTablica class that sorts in buildin
+ * vector of data.
+ * @param name Name of the sort function
+ */
 void cTablica::test(std::function<void(cTablica *, testResult &)> sorter,
                     const std::string &name) {
   std::println("Sorting with {}", name);

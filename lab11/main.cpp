@@ -1,21 +1,44 @@
-#include "src/cTablica.h"
-#include <functional>
-#include <map>
+#include "src/cSortTablicy.h"
+#include <iostream>
+#include <print>
 #include <string>
 #include <vector>
 template <typename T> using vec = std::vector<T>;
 
-int main(int argc, char *argv[]) {
-  cTablica tab{};
-  tab.data = {1, 200, 302, 201, 3, 20, 18, 156, 73, 999, 1001, 0, 0, 0, 1};
-  const std::map<std::string, std::function<void(cTablica *, testResult &)>>
-      sorters = {{"Bąbelkowe", &cTablica::sortbobel},
-                 {"Wachadłowe", &cTablica::sortwach},
-                 {"Lomuto", &cTablica::sortlomuto},
-                 {"Hoare", &cTablica::sorthoare},
-                 {"przez kopcowanie", &cTablica::sortkopcowanie}};
-  for (auto &[name, sorter] : sorters) {
-    tab.test(sorter, name);
+int main() {
+  cSortTablicy manager;
+  std::string wybor;
+
+  while (true) {
+    std::println("1. Wprowadz wlasne dane z klawiatury i przetestuj");
+    std::println("2. Uruchom automatyczny test zadanych dlugosci");
+    std::print("Wybierz opcje: ");
+    std::cin >> wybor;
+
+    if (wybor == "1") {
+      manager.wprowadzZKlawiatury();
+      manager.showResults("Dane reczne z klawiatury");
+    } else if (wybor == "2") {
+      std::vector<int> rozmiary = {100, 1000, 100000};
+
+      for (int r : rozmiary) {
+        manager.generujLosowe(r);
+        manager.showResults("Losowe");
+
+        manager.generujUporzadkowane(r);
+        manager.showResults("Uporzadkowane rosnaco");
+
+        manager.generujOdwrotnieUporzadkowane(r);
+        manager.showResults("Uporzadkowane malejaco");
+
+        manager.generujPrawiePosortowane(r);
+        manager.showResults("Prawie posortowane (10% bledow)");
+      }
+
+      break;
+    } else {
+      break;
+    }
   }
   return 0;
 }
